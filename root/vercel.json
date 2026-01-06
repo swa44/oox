@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    { "source": "/12vbb", "destination": "/12vbb/", "permanent": true },
+    { "source": "/24vbb", "destination": "/24vbb/", "permanent": true },
+    { "source": "/mline", "destination": "/mline/", "permanent": true },
+    { "source": "/t5", "destination": "/t5/", "permanent": true },
+    { "source": "/t5nu", "destination": "/t5nu/", "permanent": true }
+  ]
+}
