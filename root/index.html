@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>반응속도 테스트</title>
+    <!-- AdSense 로더 -->
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9910941411948866"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      :root {
+        --bg: #0b1020;
+        --card: #111834;
+        --muted: #9fb0ffcc;
+        --text: #e9ecff;
+        --accent: #6ea8ff;
+        --green: #19c37d;
+        --red: #ff4d4f;
+        --amber: #ffb020;
+        --purple: #7a7cff;
+        --shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 2px 10px rgba(0, 0, 0, 0.2);
+        --radius: 16px;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
+          Noto Sans KR, Helvetica, Arial, Apple Color Emoji, Segoe UI Emoji,
+          Segoe UI Symbol, sans-serif;
+        color: var(--text);
+        background: radial-gradient(
+            1200px 800px at 20% 10%,
+            #1a2144 0,
+            transparent 60%
+          ),
+          radial-gradient(900px 600px at 80% 20%, #0f2a53 0, transparent 60%),
+          linear-gradient(180deg, #070a17 0, #0b1020 60%);
+        display: grid;
+        place-items: center;
+        padding: 24px;
+      }
+
+      .app {
+        width: min(900px, 100%);
+        display: grid;
+        gap: 16px;
+      }
+
+      .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      h1 {
+        margin: 0;
+        font-size: clamp(20px, 2.4vw, 28px);
+        letter-spacing: 0.4px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      h1 .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--accent);
+        box-shadow: 0 0 0 6px rgba(110, 168, 255, 0.12);
+      }
+
+      .controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+      }
+      .control {
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        padding: 8px 12px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .control label {
+        font-size: 13px;
+        opacity: 0.85;
+      }
+      select,
+      input[type='checkbox'] {
+        accent-color: var(--accent);
+      }
+      select {
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        color: var(--text);
+        padding: 6px 10px;
+        border-radius: 8px;
+        outline: none;
+      }
+
+      .stage {
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+        border-radius: var(--radius);
+        background: var(--card);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: var(--shadow);
+        min-height: 320px;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+        cursor: pointer;
+        position: relative;
+        transition: background-color 0.2s ease, transform 0.06s ease;
+      }
+      .stage:active {
+        transform: scale(0.998);
+      }
+
+      .stage__inner {
+        text-align: center;
+        padding: 10px;
+      }
+      .stage__status {
+        font-size: clamp(13px, 1.6vw, 14px);
+        color: var(--muted);
+        letter-spacing: 0.2px;
+      }
+      .stage__prompt {
+        font-size: clamp(22px, 5vw, 42px);
+        margin-top: 8px;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+      }
+      .stage__timer {
+        font-variant-numeric: tabular-nums;
+        font-size: clamp(28px, 6.5vw, 64px);
+        margin-top: 6px;
+        font-weight: 900;
+      }
+
+      .stage.waiting {
+        background: #1e2139;
+      }
+      .stage.ready {
+        background: #0d2b1e;
+        box-shadow: 0 0 0 2px rgba(25, 195, 125, 0.3) inset, var(--shadow);
+      }
+      .stage.early {
+        background: #3a1111;
+      }
+      .stage.result {
+        background: #1c1b3a;
+      }
+
+      .bar {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 10px;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 12px;
+        padding: 10px 12px;
+      }
+      .stats {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .chip {
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        padding: 8px 10px;
+        border-radius: 999px;
+        font-size: 13px;
+      }
+
+      .btn {
+        appearance: none;
+        border: 0;
+        cursor: pointer;
+        color: #091022;
+        background: #c5d8ff;
+        font-weight: 800;
+        padding: 12px 16px;
+        border-radius: 12px;
+        box-shadow: 0 6px 14px rgba(110, 168, 255, 0.25);
+        transition: transform 0.06s ease, box-shadow 0.2s ease,
+          background 0.2s ease;
+      }
+      .btn:hover {
+        box-shadow: 0 10px 20px rgba(110, 168, 255, 0.35);
+      }
+      .btn:active {
+        transform: translateY(1px);
+      }
+      .btn.secondary {
+        background: #1e2a55;
+        color: var(--text);
+        box-shadow: none;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+      }
+
+      .list {
+        display: grid;
+        gap: 8px;
+      }
+      .list__item {
+        font-variant-numeric: tabular-nums;
+        font-size: 14px;
+        color: #cdd6ff;
+      }
+
+      .footer {
+        text-align: center;
+        opacity: 0.8;
+        font-size: 12px;
+      }
+      .kbd {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+          'Liberation Mono', 'Courier New', monospace;
+        background: rgba(255, 255, 255, 0.12);
+        padding: 2px 6px;
+        border-radius: 6px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+    </style>
+  </head>
+  <body>
+    <main class="app">
+      <div class="header">
+        <h1><span class="dot" aria-hidden="true"></span> 반응속도 테스트</h1>
+        <div class="controls" role="group" aria-label="설정">
+          <div class="control">
+            <label for="trials">시도 횟수</label>
+            <select id="trials" aria-label="시도 횟수">
+              <option value="3">3</option>
+              <option value="5" selected>5</option>
+              <option value="10">10</option>
+            </select>
+          </div>
+          <div class="control" title="신호음 재생">
+            <label for="sound">사운드</label>
+            <input
+              id="sound"
+              type="checkbox"
+              checked
+              aria-label="사운드 사용"
+            />
+          </div>
+          <button id="resetBest" class="btn secondary" type="button">
+            최고기록 초기화
+          </button>
+        </div>
+      </div>
+
+      <section
+        class="stage waiting"
+        id="stage"
+        tabindex="0"
+        role="button"
+        aria-live="polite"
+        aria-label="게임 영역"
+      >
+        <div class="stage__inner">
+          <div class="stage__status" id="status">
+            준비되면 시작 버튼을 누르세요
+          </div>
+          <div class="stage__prompt" id="prompt">
+            초록색이 되면 바로 클릭하세요
+          </div>
+          <div class="stage__timer" id="timer">— ms</div>
+        </div>
+      </section>
+
+      <div class="bar">
+        <div class="stats" aria-live="polite">
+          <div class="chip">
+            진행: <span id="progress">0</span>/<span id="total">5</span>
+          </div>
+          <div class="chip">이번 기록: <span id="last">—</span></div>
+          <div class="chip">평균: <span id="avg">—</span></div>
+          <div class="chip">오늘 최고: <span id="bestToday">—</span></div>
+          <div class="chip">전체 최고(로컬): <span id="bestAll">—</span></div>
+        </div>
+        <div class="actions">
+          <button class="btn" id="startBtn" type="button">
+            시작하기 (스페이스)
+          </button>
+        </div>
+      </div>
+
+      <details>
+        <summary>기록 목록</summary>
+        <div class="list" id="history" aria-label="기록 목록"></div>
+      </details>
+
+      <p class="footer">
+        Tip: <span class="kbd">Space</span> 로 시작/클릭 할 수 있어요. 너무 일찍
+        클릭하면 <b style="color: var(--red)">실격</b> 처리됩니다.
+      </p>
+    </main>
+
+    <script>
+      (() => {
+        const stage = document.getElementById('stage');
+        const statusEl = document.getElementById('status');
+        const promptEl = document.getElementById('prompt');
+        const timerEl = document.getElementById('timer');
+        const startBtn = document.getElementById('startBtn');
+        const trialsSel = document.getElementById('trials');
+        const progressEl = document.getElementById('progress');
+        const totalEl = document.getElementById('total');
+        const lastEl = document.getElementById('last');
+        const avgEl = document.getElementById('avg');
+        const bestTodayEl = document.getElementById('bestToday');
+        const bestAllEl = document.getElementById('bestAll');
+        const historyEl = document.getElementById('history');
+        const soundChk = document.getElementById('sound');
+        const resetBestBtn = document.getElementById('resetBest');
+
+        const LS_KEY_BEST = 'reaction_best_ms_v1';
+
+        let state = 'idle'; // 'idle' | 'waiting' | 'ready' | 'early' | 'result'
+        let timeoutId = null;
+        let startAt = 0;
+        let results = [];
+        let bestToday = Infinity;
+
+        // Set total from selector
+        const getTotal = () => parseInt(trialsSel.value, 10);
+        totalEl.textContent = getTotal();
+
+        // ----- Audio (optional)
+        let audioCtx = null;
+        function beep() {
+          if (!soundChk.checked) return;
+          try {
+            if (!audioCtx)
+              audioCtx = new (window.AudioContext ||
+                window.webkitAudioContext)();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.value = 880; // A5
+            gain.gain.value = 0.001; // start silent
+            osc.connect(gain).connect(audioCtx.destination);
+            const now = audioCtx.currentTime;
+            gain.gain.setTargetAtTime(0.06, now, 0.005);
+            osc.start();
+            // quick blip
+            osc.stop(now + 0.12);
+          } catch {}
+        }
+
+        // ----- Utils
+        const fmt = (ms) => `${Math.round(ms)} ms`;
+        const avg = (arr) =>
+          arr.length ? arr.reduce((a, b) => a + b, 0) / arr.length : 0;
+        const setStageClass = (name) => {
+          stage.classList.remove('waiting', 'ready', 'early', 'result');
+          stage.classList.add(name);
+        };
+        const updateStats = () => {
+          progressEl.textContent = results.length;
+          lastEl.textContent = results.length
+            ? fmt(results[results.length - 1])
+            : '—';
+          avgEl.textContent = results.length ? fmt(avg(results)) : '—';
+          bestTodayEl.textContent = isFinite(bestToday) ? fmt(bestToday) : '—';
+          const bestAll = Number(
+            localStorage.getItem(LS_KEY_BEST) || 'Infinity'
+          );
+          bestAllEl.textContent = isFinite(bestAll) ? fmt(bestAll) : '—';
+          // history
+          historyEl.innerHTML = results
+            .map(
+              (v, i) =>
+                `<div class="list__item">#${i + 1} — <b>${fmt(v)}</b></div>`
+            )
+            .join('');
+        };
+
+        function scheduleReady() {
+          clearTimeout(timeoutId);
+          const delay = randInt(1200, 3500); // 1.2s ~ 3.5s
+          timeoutId = setTimeout(() => {
+            state = 'ready';
+            setStageClass('ready');
+            statusEl.textContent = '지금!';
+            promptEl.textContent = '클릭 또는 스페이스바';
+            startAt = performance.now();
+            beep();
+          }, delay);
+        }
+
+        function startRound() {
+          state = 'waiting';
+          setStageClass('waiting');
+          statusEl.textContent = '대기 중…';
+          promptEl.textContent = '초록색이 되면 바로 클릭!';
+          timerEl.textContent = '— ms';
+          scheduleReady();
+          stage.focus({ preventScroll: true });
+        }
+
+        function stopAllTimers() {
+          clearTimeout(timeoutId);
+          timeoutId = null;
+        }
+
+        function record(ms) {
+          results.push(ms);
+          bestToday = Math.min(bestToday, ms);
+          const bestAll = Number(
+            localStorage.getItem(LS_KEY_BEST) || 'Infinity'
+          );
+          if (ms < bestAll) localStorage.setItem(LS_KEY_BEST, String(ms));
+          updateStats();
+        }
+
+        function finishIfNeeded() {
+          if (results.length >= getTotal()) {
+            state = 'result';
+            setStageClass('result');
+            statusEl.textContent = '세트 종료';
+            promptEl.textContent = '평균 기록';
+            timerEl.textContent = fmt(avg(results));
+            startBtn.textContent = '다시하기 (스페이스)';
+          } else {
+            // auto-continue after a short pause
+            const pause = 900;
+            setTimeout(() => startRound(), pause);
+          }
+        }
+
+        function onAction() {
+          if (state === 'idle') {
+            startGame();
+            return;
+          }
+          if (state === 'waiting') {
+            // too early
+            stopAllTimers();
+            state = 'early';
+            setStageClass('early');
+            statusEl.textContent = '너무 빨라요!';
+            promptEl.textContent = '다시 준비합니다…';
+            timerEl.textContent = '실격';
+            setTimeout(() => startRound(), 900);
+            return;
+          }
+          if (state === 'ready') {
+            const rt = performance.now() - startAt;
+            timerEl.textContent = fmt(rt);
+            record(rt);
+            finishIfNeeded();
+            return;
+          }
+          if (state === 'result' || state === 'early') {
+            startGame();
+          }
+        }
+
+        function startGame() {
+          results = [];
+          bestToday = Infinity;
+          updateStats();
+          totalEl.textContent = getTotal();
+          startBtn.textContent = '진행 중…';
+          startRound();
+        }
+
+        function randInt(min, max) {
+          return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        // ----- Events
+        startBtn.addEventListener('click', startGame);
+        stage.addEventListener('click', onAction);
+        stage.addEventListener('keydown', (e) => {
+          if (e.code === 'Space') {
+            e.preventDefault();
+            onAction();
+          }
+          if (e.code === 'Enter') {
+            e.preventDefault();
+            onAction();
+          }
+        });
+        trialsSel.addEventListener('change', () => {
+          totalEl.textContent = getTotal();
+        });
+        resetBestBtn.addEventListener('click', () => {
+          localStorage.removeItem(LS_KEY_BEST);
+          updateStats();
+        });
+
+        // init
+        updateStats();
+      })();
+    </script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </body>
+</html>

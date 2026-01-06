@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <title>24V블럭바 자동계산기</title>
+    <meta charset="UTF-8" />
+    <!-- Required meta tags -->
+
+    <!-- Facebook Meta Tags -->
+    <meta property="og:url" content="https://464.kr/24vbb" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="폴라베어 24V블럭바 자동계산기" />
+    <meta property="og:description" content="주식회사 폴라베어 제작 및 배포" />
+    <meta
+      property="og:image"
+      content="https://postfiles.pstatic.net/MjAyNTA4MTNfMiAg/MDAxNzU1MDg5MzYyMjk4.Zik1NGJl-JHenxSx_hS2OUWuaOanQFpAtyeDhid8ZCsg.JUYri3CUwTkWvrr8m-NQe8U-byLSchjlP7_A-MgwrEIg.JPEG/24g.jpg?type=w966"
+    />
+
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="twitter:domain" content="" />
+    <meta property="twitter:url" content="https://464.kr/24vbb" />
+    <meta name="twitter:title" content="폴라베어 24V블럭바 자동계산기" />
+    <meta name="twitter:description" content="주식회사 폴라베어 제작 및 배포" />
+    <meta
+      name="twitter:image"
+      content="https://postfiles.pstatic.net/MjAyNTA4MTNfMiAg/MDAxNzU1MDg5MzYyMjk4.Zik1NGJl-JHenxSx_hS2OUWuaOanQFpAtyeDhid8ZCsg.JUYri3CUwTkWvrr8m-NQe8U-byLSchjlP7_A-MgwrEIg.JPEG/24g.jpg?type=w966"
+    />
+
+    <link
+      rel="apple-touch-icon-precomposed"
+      sizes="57x57"
+      href="./assets/57x57.png"
+    />
+    <link
+      rel="apple-touch-icon-precomposed"
+      sizes="72x72"
+      href="./assets/72x72.png"
+    />
+    <link
+      rel="apple-touch-icon-precomposed"
+      sizes="60x60"
+      href="./assets/60x60.png"
+    />
+    <link
+      rel="apple-touch-icon-precomposed"
+      sizes="76x76"
+      href="./assets/76x76.png"
+    />
+    <link
+      rel="apple-touch-icon-precomposed"
+      sizes="114x114"
+      href="./assets/114x114.png"
+    />
+    <link
+      rel="apple-touch-icon-precomposed"
+      sizes="120x120"
+      href="./assets/120x120.png"
+    />
+    <link
+      rel="apple-touch-icon-precomposed"
+      sizes="144x144"
+      href="./assets/144x144.png"
+    />
+    <link
+      rel="apple-touch-icon-precomposed"
+      sizes="152x152"
+      href="./assets/152x152.png"
+    />
+    <link rel="icon" type="image/png" href="./assets/16x16.png" sizes="16x16" />
+    <link rel="icon" type="image/png" href="./assets/32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="./assets/96x96.png" sizes="96x96" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="./assets/128x128.png"
+      sizes="128x128"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      href="./assets/196x196.png"
+      sizes="196x196"
+    />
+    <meta name="msapplication-TileImage" content="" />
+    <meta name="msapplication-square70x70logo" content="./assets/70x70.png" />
+    <meta
+      name="msapplication-square150x150logo"
+      content="./assets/150x150.png"
+    />
+    <meta name="msapplication-square310x150logo" content="" />
+    <meta
+      name="msapplication-square310x310logo"
+      content="./assets/310x310.png"
+    />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-5JF12NFL0Y"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+
+      gtag('config', 'G-5JF12NFL0Y');
+    </script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- 전체 페이지 가운데 정렬용 래퍼 -->
+    <div class="page">
+      <h1>블럭바 24V 계산기</h1>
+
+      <!-- ===== 최초 연결 방식 선택 카드 ===== -->
+      <div
+        id="connectChooser"
+        class="card"
+        style="text-align: center; max-width: 680px; margin: 0 auto 24px"
+      >
+        <div class="rank-title" style="font-size: 18px; margin-bottom: 10px">
+          설치 방식 선택
+        </div>
+        <p class="muted" style="margin: 0 0 12px">
+          먼저 연결 방식을 선택해주세요.
+        </p>
+        <div
+          style="
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: stretch;
+          "
+        >
+          <button
+            type="button"
+            class="btn btn-primary"
+            id="pickSerial"
+            style="padding: 12px"
+          >
+            직렬연결
+          </button>
+          <button
+            type="button"
+            class="btn"
+            id="pickParallel"
+            style="padding: 12px"
+          >
+            병렬연결
+          </button>
+        </div>
+      </div>
+
+      <!-- 선택된 연결 방식 표시 -->
+      <p
+        id="connectionInfo"
+        class="lead"
+        style="display: none; text-align: center; margin-bottom: 30px"
+      >
+        <strong>선택한 설치 방식:</strong>
+        <span id="connectionTypeText">-</span>
+      </p>
+
+      <!-- ===== 본 계산기 영역 (선택 전 숨김) ===== -->
+      <div id="calcArea" style="display: none">
+        <p style="text-align: center; margin-bottom: 50px" class="lead">
+          <strong
+            >설치할 공간의 길이(mm)를 입력하고,<br />원하시는 부속품을 체크해
+            주세요.</strong
+          >
+        </p>
+
+        <div class="controls" id="controlsWrap">
+          <!-- ✅ 길이 입력(직렬: 단일 / 병렬: A,B) — 위로 올림 -->
+          <div id="lengthInputsArea" class="full">
+            <!-- 선택 후 JS가 렌더링 -->
+          </div>
+
+          <!-- ✅ 부속품 체크박스 카드 — 아래로 내림 -->
+          <fieldset class="checkbox-group full">
+            <p
+              style="
+                color: red;
+                font-weight: bold;
+                margin: 8px 0;
+                text-align: left;
+              "
+            >
+              ※ 선택하지 않을경우 기본세팅으로 계산됩니다.<br />
+              ※ 필수 부속품은 자동으로 계산됩니다.
+            </p>
+
+            <!-- 중간연결형 -->
+            <label class="checkbox-row with-thumb">
+              <div class="row-top">
+                <input type="checkbox" id="midConnect" />
+                <div class="label-text">
+                  <strong>중간연결형</strong>
+                  <span class="desc">가운데에 전원입력 가능</span>
+                </div>
+              </div>
+              <div class="acc-thumb">
+                <img
+                  src="./assets/thumb_n1.png"
+                  alt="중간연결형 예시 이미지"
+                  loading="lazy"
+                />
+              </div>
+            </label>
+
+            <!-- 아크릴 커버 -->
+            <label class="checkbox-row with-thumb">
+              <div class="row-top">
+                <input type="checkbox" id="acrylicCover" />
+                <div class="label-text">
+                  <strong>아크릴 커버</strong>
+                  <span class="desc">빛의 산란보조 및 먼지방지</span>
+                </div>
+              </div>
+              <div class="acc-thumb">
+                <img
+                  src="./assets/thumb_2.png"
+                  alt="아크릴 커버 예시 이미지"
+                  loading="lazy"
+                />
+              </div>
+            </label>
+
+            <!-- 코너각대 -->
+            <label class="checkbox-row with-thumb">
+              <div class="row-top">
+                <input type="checkbox" id="cornerAngle" />
+                <div class="label-text">
+                  <strong>코너각대</strong>
+                  <span class="desc">블럭바 45도 설치가이드</span>
+                </div>
+              </div>
+              <div class="acc-thumb">
+                <img
+                  src="./assets/thumb_3.png"
+                  alt="코너각대 예시 이미지"
+                  loading="lazy"
+                />
+              </div>
+            </label>
+          </fieldset>
+
+          <div class="full">
+            <button id="calcBtn" type="button">계산하기</button>
+          </div>
+
+          <!-- ▼ 추가: 처음으로 버튼 -->
+          <div class="full">
+            <button id="resetBtn" type="button">처음으로</button>
+          </div>
+        </div>
+
+        <p class="hint">
+          ※ 규격: 100, 200, 300, 400, 500, 1000mm (무제한 사용, 50mm 제외)<br />
+          ※ 남는 공간은 기본적으로 <strong>40~99mm</strong>가 되도록 우선
+          맞추며, 불가능한 경우 <strong>100~140mm</strong> 범위로 맞춥니다.
+        </p>
+
+        <div class="result" id="resultArea"></div>
+      </div>
+      <!-- /#calcArea -->
+    </div>
+    <!-- /.page -->
+
+    <!-- ========== 길이 초과 경고 모달 (직렬연결 & 5M 초과) ========== -->
+    <div
+      id="lenModal"
+      class="modal"
+      aria-hidden="true"
+      role="dialog"
+      aria-labelledby="lenModalTitle"
+    >
+      <div class="modal__backdrop" data-close-modal></div>
+      <div class="modal__dialog">
+        <div class="modal__header">
+          <h2 id="lenModalTitle">안내</h2>
+        </div>
+        <div class="modal__body">
+          <p style="margin: 0 0 10px">
+            <strong
+              >5M 이상 직렬 연결은 빛 흐려짐 등의 이유로 권장하지
+              않습니다.</strong
+            >
+          </p>
+          <p style="margin: 0">병렬 연결을 고려해 주세요.</p>
+        </div>
+        <div class="modal__footer modal__footer--stack">
+          <button class="btn btn-full" type="button" data-close-modal>
+            닫기
+          </button>
+        </div>
+      </div>
+    </div>
+    <script src="app.js?v=2508221700"></script>
+  </body>
+</html>

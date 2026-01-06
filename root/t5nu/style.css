@@ -1,0 +1,281 @@
+:root {
+  --card-bg: #ececff;
+  --card-border: #e5e7eb;
+  --muted: #6b7280;
+}
+
+/* 공통 */
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  line-height: 1.5;
+}
+label,
+input,
+button,
+select {
+  font-size: 16px;
+}
+
+/* 가운데 래퍼 */
+.wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* 카드 */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+  box-shadow: 0 1px 2px rgba(12, 12, 12, 0.337);
+  width: 100%;
+  max-width: 100%;
+  text-align: left;
+}
+.rank-title {
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.muted {
+  color: var(--muted);
+  font-size: 13px;
+  margin-top: 6px;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+.divider {
+  border-top: 1px dashed var(--card-border);
+  margin-top: 10px;
+  padding-top: 8px;
+}
+.counts {
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+.no-data {
+  color: #b91c1c;
+}
+
+/* 컨트롤 그리드 (가운데 배치) */
+.controls {
+  display: inline-grid;
+  grid-template-columns: minmax(90px, 140px) minmax(0, 1fr);
+  gap: 8px 12px;
+  align-items: center;
+  max-width: 720px;
+}
+.controls .full {
+  grid-column: 1 / -1;
+}
+
+/* 인풋 */
+input[type="number"],
+select {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+}
+
+/* 버튼 */
+button {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #cfd2ff;
+  border-radius: 10px;
+  background: #f1f3ff;
+  font-weight: 700;
+  cursor: pointer;
+  transition: box-shadow 0.12s ease-in-out, transform 0.02s ease-in-out;
+}
+button:hover {
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+button:active {
+  transform: translateY(1px);
+}
+
+/* 설치 타입 선택 버튼 */
+.pickbtn {
+  background-color: #fff; /* 기본 흰색 */
+  color: #333;
+  border: 0.1px solid #000; /* 경계선 */
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 12px;
+  transition: background-color 0.3s, color 0.3s, box-shadow 0.12s,
+    transform 0.02s;
+}
+
+/* 마우스 올렸을 때 파란색 */
+.pickbtn:hover {
+  background-color: #3b4cd2;
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* 클릭 시 살짝 눌림 */
+.pickbtn:active {
+  transform: translateY(1px);
+}
+
+/* 세로 스택 */
+.stack-vert {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: stretch;
+}
+
+/* 안내 배지 */
+.remaining-box {
+  background-color: rgb(231, 200, 1);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+/* 라디오/행 배치 */
+.row {
+  display: flex;
+  justify-content: flex-start !important;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: nowrap;
+}
+.row > * {
+  flex: 0 0 auto;
+}
+.row label {
+  margin: 0;
+}
+input[type="radio"] {
+  width: auto;
+  margin: 0;
+}
+
+/* 이미지 래퍼 */
+.img-wrap {
+  text-align: center;
+}
+
+/* 결과 */
+.result {
+  margin-top: 20px;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* 플로팅 합계 바 */
+.floating-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  padding: 8px 12px calc(8px + env(safe-area-inset-bottom));
+  display: none;
+  pointer-events: none;
+}
+.floating-bar.visible {
+  display: block;
+}
+.floating-bar .card {
+  margin: 0;
+  pointer-events: auto;
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.15);
+}
+.floating-bar .card.totals {
+  background: #fff4e5;
+  border: 1px solid #f3b673;
+}
+
+/* 반응형 */
+@media (max-width: 560px) {
+  body {
+    padding: 16px;
+  }
+  .controls {
+    grid-template-columns: 1fr;
+    max-width: 100%;
+  }
+  .controls label {
+    margin-top: 6px;
+  }
+  input,
+  select,
+  button {
+    width: 100%;
+  }
+  .card {
+    margin-left: 0;
+    margin-right: 0;
+    padding: 12px 14px;
+  }
+  .row {
+    justify-content: flex-start !important;
+  }
+  .row label {
+    flex: 0 0 auto;
+  }
+}
+
+/* 유튜브 박스 */
+.yt-box {
+  margin-bottom: 16px;
+}
+.yt-embed {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  margin: 0 auto;
+  aspect-ratio: 16 / 9;
+}
+.yt-embed iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+/* 이미지 카드 스타일 */
+.image-card {
+  margin-bottom: 16px;
+  text-align: center;
+  border-radius: 8px;
+  overflow: hidden;
+  width: 100%;
+}
+
+.main-image {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  object-fit: contain; /* 비율 유지하면서 영역에 맞춤 */
+}
+
+/* 반응형 */
+@media (max-width: 560px) {
+  .main-image {
+    border-radius: 4px; /* 모바일에서는 약간 작은 라운딩 */
+  }
+}
