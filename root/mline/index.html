@@ -29,68 +29,86 @@
     <link
       rel="apple-touch-icon-precomposed"
       sizes="57x57"
-      href="./assets/57x57.png"
+      href="/mline/assets/57x57.png"
     />
     <link
       rel="apple-touch-icon-precomposed"
       sizes="72x72"
-      href="./assets/72x72.png"
+      href="/mline/assets/72x72.png"
     />
     <link
       rel="apple-touch-icon-precomposed"
       sizes="60x60"
-      href="./assets/60x60.png"
+      href="/mline/assets/60x60.png"
     />
     <link
       rel="apple-touch-icon-precomposed"
       sizes="76x76"
-      href="./assets/76x76.png"
+      href="/mline/assets/76x76.png"
     />
     <link
       rel="apple-touch-icon-precomposed"
       sizes="114x114"
-      href="./assets/114x114.png"
+      href="/mline/assets/114x114.png"
     />
     <link
       rel="apple-touch-icon-precomposed"
       sizes="120x120"
-      href="./assets/120x120.png"
+      href="/mline/assets/120x120.png"
     />
     <link
       rel="apple-touch-icon-precomposed"
       sizes="144x144"
-      href="./assets/144x144.png"
+      href="/mline/assets/144x144.png"
     />
     <link
       rel="apple-touch-icon-precomposed"
       sizes="152x152"
-      href="./assets/152x152.png"
+      href="/mline/assets/152x152.png"
     />
-    <link rel="icon" type="image/png" href="./assets/16x16.png" sizes="16x16" />
-    <link rel="icon" type="image/png" href="./assets/32x32.png" sizes="32x32" />
-    <link rel="icon" type="image/png" href="./assets/96x96.png" sizes="96x96" />
     <link
       rel="icon"
       type="image/png"
-      href="./assets/128x128.png"
+      href="/mline/assets/16x16.png"
+      sizes="16x16"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      href="/mline/assets/32x32.png"
+      sizes="32x32"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      href="/mline/assets/96x96.png"
+      sizes="96x96"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      href="/mline/assets/128x128.png"
       sizes="128x128"
     />
     <link
       rel="icon"
       type="image/png"
-      href="./assets/196x196.png"
+      href="/mline/assets/196x196.png"
       sizes="196x196"
     />
     <meta name="msapplication-TileImage" content="" />
-    <meta name="msapplication-square70x70logo" content="./assets/70x70.png" />
+    <meta
+      name="msapplication-square70x70logo"
+      content="/mline/assets/70x70.png"
+    />
     <meta
       name="msapplication-square150x150logo"
-      content="./assets/150x150.png"
+      content="/mline/assets/150x150.png"
     />
     <meta name="msapplication-square310x150logo" content="" />
     <meta
       name="msapplication-square310x310logo"
-      content="./assets/310x310.png"
+      content="/mline/assets/310x310.png"
     />
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -108,7 +126,7 @@
       gtag("config", "G-K3C001CVT9");
     </script>
 
-    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="/mline/style.css" />
   </head>
   <body>
     <div class="page">
@@ -155,6 +173,24 @@
         style="display: none; max-width: 720px; margin: 0 auto"
       >
         <div class="controls">
+          <!-- 규격 선택 가이드 이미지 -->
+          <div
+            id="specGuideImage"
+            class="full"
+            style="text-align: center; margin: 16px 0 8px; display: none"
+          >
+            <img
+              src="./images/spec-guide.jpg"
+              alt="규격 선택 가이드"
+              style="
+                max-width: 100%;
+                height: auto;
+                border-radius: 8px;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+              "
+            />
+          </div>
+
           <!-- 규격 선택 -->
           <label for="specSelect">규격 선택</label>
           <select id="specSelect">
@@ -162,6 +198,24 @@
             <option value="40">40</option>
             <option value="60">60</option>
           </select>
+
+          <!-- 전원선 선택 가이드 이미지 -->
+          <div
+            id="wireGuideImage"
+            class="full"
+            style="text-align: center; margin: 16px 0 8px; display: none"
+          >
+            <img
+              src="./images/wire-guide.jpg"
+              alt="전원선 선택 가이드"
+              style="
+                max-width: 100%;
+                height: auto;
+                border-radius: 8px;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+              "
+            />
+          </div>
 
           <!-- 전원선 선택 -->
           <label for="wiringSelect">전원선 종류</label>
@@ -206,7 +260,7 @@
 
       <!-- 결과 영역 -->
       <div class="result" id="resultArea"></div>
-      <script src="./app.js" defer></script>
+      <script src="/mline/app.js" defer></script>
     </div>
   </body>
 </html>

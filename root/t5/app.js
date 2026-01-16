@@ -1,12 +1,12 @@
 // ===== 기본 데이터 =====
 const t5Sizes = [
-  { label: '1200', length: 1160 },
-  { label: '900', length: 860 },
-  { label: '600', length: 560 },
-  { label: '400', length: 390 },
-  { label: '300', length: 300 },
+  { label: "1200", length: 1160 },
+  { label: "900", length: 860 },
+  { label: "600", length: 560 },
+  { label: "400", length: 390 },
+  { label: "300", length: 300 },
 ];
-const order = ['1200', '900', '600', '400', '300'];
+const order = ["1200", "900", "600", "400", "300"];
 const priceMap = {
   1200: 6700,
   900: 6200,
@@ -18,46 +18,46 @@ const realMap = { 1200: 1160, 900: 860, 600: 560, 400: 390, 300: 300 };
 
 // 타입별 이미지 경로
 const typeImageSrc = {
-  straight: './assets/t5measure_D.jpg', // 일자
-  L: './assets/t5measure_R.jpg', // ㄱ자
-  square: './assets/t5measure_M.jpg', // ㅁ자
+  straight: "/t5/assets/t5measure_D.jpg", // 일자
+  L: "/t5/assets/t5measure_R.jpg", // ㄱ자
+  square: "/t5/assets/t5measure_M.jpg", // ㅁ자
 };
 
 const selections = {};
 const sideLists = {};
 
 // ── DOM refs
-const typeChooser = document.getElementById('typeChooser');
-const calcArea = document.getElementById('calcArea');
-const typeSelect = document.getElementById('typeSelect');
-const dynInputs = document.getElementById('dynamicInputs');
-const resultArea = document.getElementById('resultArea');
-const floatingBar = document.getElementById('floatingTotals');
-const calcBtn = document.getElementById('calcBtn');
-const imgWrap = document.getElementById('typeImageContainer');
-const imgEl = document.getElementById('typeImage');
-const resetBtn = document.getElementById('resetBtn');
+const typeChooser = document.getElementById("typeChooser");
+const calcArea = document.getElementById("calcArea");
+const typeSelect = document.getElementById("typeSelect");
+const dynInputs = document.getElementById("dynamicInputs");
+const resultArea = document.getElementById("resultArea");
+const floatingBar = document.getElementById("floatingTotals");
+const calcBtn = document.getElementById("calcBtn");
+const imgWrap = document.getElementById("typeImageContainer");
+const imgEl = document.getElementById("typeImage");
+const resetBtn = document.getElementById("resetBtn");
 
 // ── 타입 선택 버튼 클릭
-typeChooser.addEventListener('click', (e) => {
-  const btn = e.target.closest('[data-choose]');
+typeChooser.addEventListener("click", (e) => {
+  const btn = e.target.closest("[data-choose]");
   if (!btn) return;
-  const type = btn.getAttribute('data-choose');
+  const type = btn.getAttribute("data-choose");
   chooseType(type);
 });
 
 function chooseType(type) {
   typeSelect.value = type;
-  typeChooser.style.display = 'none';
-  calcArea.style.display = '';
+  typeChooser.style.display = "none";
+  calcArea.style.display = "";
 
   // 타입별 이미지 표시
-  const src = typeImageSrc[type] || '';
+  const src = typeImageSrc[type] || "";
   if (src) {
     imgEl.src = src;
-    imgWrap.style.display = '';
+    imgWrap.style.display = "";
   } else {
-    imgWrap.style.display = 'none';
+    imgWrap.style.display = "none";
   }
 
   renderInputs();
@@ -65,9 +65,9 @@ function chooseType(type) {
 
 // ── 엔터로 계산
 function handleEnterKey(e) {
-  if (e.key === 'Enter') {
+  if (e.key === "Enter") {
     const t = e.target;
-    if (t && t.tagName === 'INPUT' && t.type === 'number') {
+    if (t && t.tagName === "INPUT" && t.type === "number") {
       e.preventDefault();
       onCalculate();
     }
@@ -77,19 +77,19 @@ function handleEnterKey(e) {
 // ── 입력칸 렌더
 function renderInputs() {
   // 상태/결과 초기화
-  resultArea.innerHTML = '';
+  resultArea.innerHTML = "";
   hideFloatingTotals();
   Object.keys(selections).forEach((k) => delete selections[k]);
   Object.keys(sideLists).forEach((k) => delete sideLists[k]);
 
   const type = typeSelect.value;
 
-  if (type === 'straight') {
+  if (type === "straight") {
     dynInputs.innerHTML = `
             <label for="lengthInput1">설치 공간 길이 (mm)</label>
             <input type="number" id="lengthInput1" min="0" placeholder="설치공간의 길이를 입력해주세요. (예: 2437)" />
           `;
-  } else if (type === 'L') {
+  } else if (type === "L") {
     dynInputs.innerHTML = `
             <label for="lengthInput1">변 A 길이 (mm)</label>
             <input type="number" id="lengthInput1" min="0" placeholder="설치공간의 길이를 입력해주세요. (예: 3000)" />
@@ -110,8 +110,8 @@ function renderInputs() {
   }
 
   // 엔터핸들러 부착
-  dynInputs.removeEventListener('keydown', handleEnterKey);
-  dynInputs.addEventListener('keydown', handleEnterKey);
+  dynInputs.removeEventListener("keydown", handleEnterKey);
+  dynInputs.addEventListener("keydown", handleEnterKey);
 }
 
 // ── 유틸
@@ -119,8 +119,8 @@ function formatCounts(countMap) {
   const lines = order
     .filter((l) => (countMap[l] || 0) > 0)
     .map((l) => `${l}mm : ${countMap[l]}개`)
-    .join('\n');
-  return lines || '없음';
+    .join("\n");
+  return lines || "없음";
 }
 function comboToCounts(item) {
   const cm = { 1200: 0, 900: 0, 600: 0, 400: 0, 300: 0 };
@@ -190,12 +190,12 @@ function renderSelectableSide(list, sideId, title) {
   let html = `<div class="card"><div class="side-header"><div class="rank-title">${title}</div></div>`;
   list.forEach((item, idx) => {
     const cm = comboToCounts(item);
-    const price = new Intl.NumberFormat('ko-KR').format(priceFromCounts(cm));
-    const checked = selections[sideId] === idx ? 'checked' : '';
+    const price = new Intl.NumberFormat("ko-KR").format(priceFromCounts(cm));
+    const checked = selections[sideId] === idx ? "checked" : "";
     const realLines = order
       .filter((l) => cm[l] > 0)
       .map((l) => `${realMap[l]}mm x ${cm[l]}`)
-      .join(', ');
+      .join(", ");
 
     html += `
             <div class="divider">
@@ -215,7 +215,7 @@ function renderSelectableSide(list, sideId, title) {
               <div style="margin-top:4px;"><strong>예상 비용</strong> ₩${price}</div>
             </div>`;
   });
-  html += '</div>';
+  html += "</div>";
   return html;
 }
 window.onPick = function (sideId, idx) {
@@ -226,16 +226,16 @@ window.onPick = function (sideId, idx) {
 // ── 플로팅 합계 바
 function showFloatingTotals(html) {
   floatingBar.innerHTML = html;
-  floatingBar.classList.add('visible');
+  floatingBar.classList.add("visible");
   requestAnimationFrame(() => {
     const h = floatingBar.offsetHeight || 0;
-    document.body.style.paddingBottom = h + 10 + 'px';
+    document.body.style.paddingBottom = h + 10 + "px";
   });
 }
 function hideFloatingTotals() {
-  floatingBar.classList.remove('visible');
-  floatingBar.innerHTML = '';
-  document.body.style.paddingBottom = '';
+  floatingBar.classList.remove("visible");
+  floatingBar.innerHTML = "";
+  document.body.style.paddingBottom = "";
 }
 function renderTotals() {
   const totalCounts = { 1200: 0, 900: 0, 600: 0, 400: 0, 300: 0 };
@@ -243,7 +243,7 @@ function renderTotals() {
   for (const sideId in sideLists) {
     const list = sideLists[sideId];
     const pickIndex = selections[sideId];
-    if (!list || typeof pickIndex !== 'number' || !list[pickIndex]) continue;
+    if (!list || typeof pickIndex !== "number" || !list[pickIndex]) continue;
     const cm = comboToCounts(list[pickIndex]);
     order.forEach((l) => {
       totalCounts[l] += cm[l] || 0;
@@ -254,7 +254,7 @@ function renderTotals() {
     hideFloatingTotals();
     return;
   }
-  const cost = new Intl.NumberFormat('ko-KR').format(
+  const cost = new Intl.NumberFormat("ko-KR").format(
     priceFromCounts(totalCounts)
   );
   const html = `
@@ -267,20 +267,20 @@ function renderTotals() {
 }
 
 // ── 계산 버튼
-calcBtn.addEventListener('click', onCalculate);
+calcBtn.addEventListener("click", onCalculate);
 function onCalculate() {
-  gtag('event', 'calculate_button_click', {
-    event_category: 'interaction',
-    event_label: 'T5 Calculator',
+  gtag("event", "calculate_button_click", {
+    event_category: "interaction",
+    event_label: "T5 Calculator",
   });
 
   const type = typeSelect.value;
-  resultArea.innerHTML = '';
+  resultArea.innerHTML = "";
   Object.keys(selections).forEach((k) => delete selections[k]);
   Object.keys(sideLists).forEach((k) => delete sideLists[k]);
 
-  if (type === 'straight') {
-    const L = parseInt(document.getElementById('lengthInput1')?.value);
+  if (type === "straight") {
+    const L = parseInt(document.getElementById("lengthInput1")?.value);
     if (isNaN(L) || L <= 0) {
       resultArea.innerHTML =
         '<p class="no-data">길이를 올바르게 입력해주세요.</p>';
@@ -294,19 +294,19 @@ function onCalculate() {
       hideFloatingTotals();
       return;
     }
-    let html = '';
+    let html = "";
     html +=
       '<div class="card" style="margin-bottom:16px;"><strong>일자 조합에서 하나를 선택하시면 <br>맨 밑에 총 개수와 금액이 나타납니다.<br>전원선 연결 하실분은 여유치수 70mm 이상,<br>커넥터 분리 후 연결하실 분들은 <br>자유롭게 선택해주세요.</strong></div>';
-    html += renderSelectableSide(list, 'STRAIGHT', '일자 조합 리스트');
+    html += renderSelectableSide(list, "STRAIGHT", "일자 조합 리스트");
     html += '<div id="totalsBox"></div>';
     resultArea.innerHTML = html;
     renderTotals();
     return;
   }
 
-  if (type === 'L') {
-    const A = parseInt(document.getElementById('lengthInput1')?.value);
-    const B = parseInt(document.getElementById('lengthInput2')?.value);
+  if (type === "L") {
+    const A = parseInt(document.getElementById("lengthInput1")?.value);
+    const B = parseInt(document.getElementById("lengthInput2")?.value);
     if ([A, B].some((v) => isNaN(v) || v <= 0)) {
       resultArea.innerHTML =
         '<p class="no-data">두 변 길이를 올바르게 입력해주세요.</p>';
@@ -321,22 +321,22 @@ function onCalculate() {
       hideFloatingTotals();
       return;
     }
-    let html = '';
+    let html = "";
     html +=
       '<div class="card" style="margin-bottom:16px;"><strong>A,B 각 변의 조합을 하나씩 선택하시면 <br>맨 밑에 총 개수와 금액이 나타납니다.<br>전원선 연결 하실분은 여유치수 70mm 이상,<br>커넥터 분리 후 연결하실 분들은 <br>자유롭게 선택해주세요.</strong></div>';
-    html += renderSelectableSide(listA, 'A', '변 A 조합 리스트');
-    html += renderSelectableSide(listB, 'B', '변 B 조합 리스트');
+    html += renderSelectableSide(listA, "A", "변 A 조합 리스트");
+    html += renderSelectableSide(listB, "B", "변 B 조합 리스트");
     html += '<div id="totalsBox"></div>';
     resultArea.innerHTML = html;
     renderTotals();
     return;
   }
 
-  if (type === 'square') {
-    const S1 = parseInt(document.getElementById('lengthInput1')?.value);
-    const S2 = parseInt(document.getElementById('lengthInput2')?.value);
-    const S3 = parseInt(document.getElementById('lengthInput3')?.value);
-    const S4 = parseInt(document.getElementById('lengthInput4')?.value);
+  if (type === "square") {
+    const S1 = parseInt(document.getElementById("lengthInput1")?.value);
+    const S2 = parseInt(document.getElementById("lengthInput2")?.value);
+    const S3 = parseInt(document.getElementById("lengthInput3")?.value);
+    const S4 = parseInt(document.getElementById("lengthInput4")?.value);
     if ([S1, S2, S3, S4].some((v) => isNaN(v) || v <= 0)) {
       resultArea.innerHTML =
         '<p class="no-data">4개 변 길이를 모두 올바르게 입력해주세요.</p>';
@@ -356,13 +356,13 @@ function onCalculate() {
       hideFloatingTotals();
       return;
     }
-    let html = '';
+    let html = "";
     html +=
       '<div class="card" style="margin-bottom:16px;"><strong>A,B,C,D 각 변의 조합을 하나씩 선택하시면 <br>맨 밑에 총 개수와 금액이 나타납니다.<br>전원선 연결 하실분은 여유치수 70mm 이상,<br>커넥터 분리 후 연결하실 분들은 <br>자유롭게 선택해주세요.</strong></div>';
-    html += renderSelectableSide(lists[0], 'S1', '변 A 조합 리스트');
-    html += renderSelectableSide(lists[1], 'S2', '변 B 조합 리스트');
-    html += renderSelectableSide(lists[2], 'S3', '변 C 조합 리스트');
-    html += renderSelectableSide(lists[3], 'S4', '변 D 조합 리스트');
+    html += renderSelectableSide(lists[0], "S1", "변 A 조합 리스트");
+    html += renderSelectableSide(lists[1], "S2", "변 B 조합 리스트");
+    html += renderSelectableSide(lists[2], "S3", "변 C 조합 리스트");
+    html += renderSelectableSide(lists[3], "S4", "변 D 조합 리스트");
     html += '<div id="totalsBox"></div>';
     resultArea.innerHTML = html;
     renderTotals();
@@ -371,51 +371,51 @@ function onCalculate() {
 
 // ── 유튜브 일시정지 (초기화/타입변경 시 사용)
 function pauseYoutube() {
-  const iframe = document.getElementById('ytPlayer');
+  const iframe = document.getElementById("ytPlayer");
   if (!iframe) return;
   iframe.contentWindow?.postMessage(
-    JSON.stringify({ event: 'command', func: 'pauseVideo', args: [] }),
-    '*'
+    JSON.stringify({ event: "command", func: "pauseVideo", args: [] }),
+    "*"
   );
 }
 
 function chooseType(type) {
   pauseYoutube();
   typeSelect.value = type;
-  typeChooser.style.display = 'none';
-  calcArea.style.display = '';
+  typeChooser.style.display = "none";
+  calcArea.style.display = "";
 
-  const src = typeImageSrc[type] || '';
+  const src = typeImageSrc[type] || "";
   if (src) {
     imgEl.src = src;
-    imgWrap.style.display = '';
+    imgWrap.style.display = "";
   } else {
-    imgWrap.style.display = 'none';
+    imgWrap.style.display = "none";
   }
   renderInputs();
 }
 
 // ── "처음으로" 버튼 동작
-resetBtn.addEventListener('click', goHome);
+resetBtn.addEventListener("click", goHome);
 function goHome() {
   // 상태 초기화
-  resultArea.innerHTML = '';
-  dynInputs.innerHTML = '';
+  resultArea.innerHTML = "";
+  dynInputs.innerHTML = "";
   hideFloatingTotals();
   Object.keys(selections).forEach((k) => delete selections[k]);
   Object.keys(sideLists).forEach((k) => delete sideLists[k]);
 
   // 이미지 숨기고 소스 제거
-  imgEl.removeAttribute('src');
-  imgWrap.style.display = 'none';
+  imgEl.removeAttribute("src");
+  imgWrap.style.display = "none";
 
   // 화면 전환
-  calcArea.style.display = 'none';
-  typeChooser.style.display = '';
+  calcArea.style.display = "none";
+  typeChooser.style.display = "";
 
   // 유튜브 정지
   pauseYoutube();
 
   // 맨 위로
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }

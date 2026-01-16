@@ -18,9 +18,9 @@ const realMap = { 1200: 1180, 900: 880, 600: 580, 400: 375, 300: 285 };
 
 // 타입별 이미지 경로
 const typeImageSrc = {
-  straight: "./assets/t5measure_D.jpg", // 일자
-  L: "./assets/t5measure_R.jpg", // ㄱ자
-  square: "./assets/t5measure_M.jpg", // ㅁ자
+  straight: "/t5nu/assets/t5measure_D.jpg", // 일자
+  L: "/t5nu/assets/t5measure_R.jpg", // ㄱ자
+  square: "/t5nu/assets/t5measure_M.jpg", // ㅁ자
 };
 
 const selections = {};

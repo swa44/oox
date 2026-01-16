@@ -366,6 +366,12 @@
     renderLengthInputs();
     resultArea.innerHTML = "";
 
+    // 가이드 이미지 표시
+    const specGuideImageDiv = document.getElementById("specGuideImage");
+    const wireGuideImageDiv = document.getElementById("wireGuideImage");
+    specGuideImageDiv.style.display = "block";
+    wireGuideImageDiv.style.display = "block";
+
     // 샘플 이미지 표시
     const sampleImageDiv = document.getElementById("inputSampleImage");
     const sampleImg = document.getElementById("sampleImg");
@@ -947,7 +953,9 @@
     lengthInputsArea.innerHTML = "";
     resultArea.innerHTML = "";
 
-    // 샘플 이미지 숨기기
+    // 모든 가이드 이미지 숨기기
+    document.getElementById("specGuideImage").style.display = "none";
+    document.getElementById("wireGuideImage").style.display = "none";
     document.getElementById("inputSampleImage").style.display = "none";
 
     window.scrollTo({ top: 0, behavior: "smooth" });
