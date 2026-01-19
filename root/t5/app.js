@@ -67,12 +67,25 @@ function chooseType(type) {
 function handleEnterKey(e) {
   if (e.key === "Enter") {
     const t = e.target;
-    if (t && t.tagName === "INPUT" && t.type === "number") {
+    if (t && t.tagName === "INPUT" && t.type === "text") {
+      // type="text"로 변경
       e.preventDefault();
       onCalculate();
     }
   }
 }
+
+// ── 여기부터 추가 ──
+// 천 단위 쉼표 추가
+function addComma(num) {
+  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+// 쉼표 제거
+function removeComma(str) {
+  return str.replace(/,/g, "");
+}
+// ── 여기까지 추가 ──
 
 // ── 입력칸 렌더
 function renderInputs() {
@@ -86,32 +99,61 @@ function renderInputs() {
 
   if (type === "straight") {
     dynInputs.innerHTML = `
-            <label for="lengthInput1">설치 공간 길이 (mm)</label>
-            <input type="number" id="lengthInput1" min="0" placeholder="설치공간의 길이를 입력해주세요. (예: 2437)" />
-          `;
+    <div class="input-group">
+      <label for="lengthInput1">A 길이 (mm)</label>
+      <input type="text" id="lengthInput1" inputmode="numeric" placeholder="길이를 입력해주세요" />
+    </div>
+  `;
   } else if (type === "L") {
     dynInputs.innerHTML = `
-            <label for="lengthInput1">변 A 길이 (mm)</label>
-            <input type="number" id="lengthInput1" min="0" placeholder="설치공간의 길이를 입력해주세요. (예: 3000)" />
-            <label for="lengthInput2">변 B 길이 (mm)</label>
-            <input type="number" id="lengthInput2" min="0" placeholder="설치공간의 길이를 입력해주세요. (예: 2000)" />
-          `;
+    <div class="input-group">
+      <label for="lengthInput1">A 길이 (mm)</label>
+      <input type="text" id="lengthInput1" inputmode="numeric" placeholder="길이를 입력해주세요" />
+    </div>
+    <div class="input-group">
+      <label for="lengthInput2">B 길이 (mm)</label>
+      <input type="text" id="lengthInput2" inputmode="numeric" placeholder="길이를 입력해주세요" />
+    </div>
+  `;
   } else {
     dynInputs.innerHTML = `
-            <label for="lengthInput1">변 A 길이 (mm)</label>
-            <input type="number" id="lengthInput1" min="0" placeholder="설치공간의 길이를 입력해주세요. (예: 3000)" />
-            <label for="lengthInput2">변 B 길이 (mm)</label>
-            <input type="number" id="lengthInput2" min="0" placeholder="설치공간의 길이를 입력해주세요. (예: 3000)" />
-            <label for="lengthInput3">변 C 길이 (mm)</label>
-            <input type="number" id="lengthInput3" min="0" placeholder="설치공간의 길이를 입력해주세요. (예: 3000)" />
-            <label for="lengthInput4">변 D 길이 (mm)</label>
-            <input type="number" id="lengthInput4" min="0" placeholder="설치공간의 길이를 입력해주세요. (예: 3000)" />
-          `;
+    <div class="input-group">
+      <label for="lengthInput1">A 길이 (mm)</label>
+      <input type="text" id="lengthInput1" inputmode="numeric" placeholder="길이를 입력해주세요" />
+    </div>
+    <div class="input-group">
+      <label for="lengthInput2">B 길이 (mm)</label>
+      <input type="text" id="lengthInput2" inputmode="numeric" placeholder="길이를 입력해주세요" />
+    </div>
+    <div class="input-group">
+      <label for="lengthInput3">C 길이 (mm)</label>
+      <input type="text" id="lengthInput3" inputmode="numeric" placeholder="길이를 입력해주세요" />
+    </div>
+    <div class="input-group">
+      <label for="lengthInput4">D 길이 (mm)</label>
+      <input type="text" id="lengthInput4" inputmode="numeric" placeholder="길이를 입력해주세요" />
+    </div>
+  `;
   }
 
   // 엔터핸들러 부착
   dynInputs.removeEventListener("keydown", handleEnterKey);
   dynInputs.addEventListener("keydown", handleEnterKey);
+
+  // 쉼표 포맷팅 이벤트 추가
+  dynInputs.addEventListener("input", (e) => {
+    const input = e.target;
+    if (input && input.tagName === "INPUT" && input.type === "text") {
+      let value = removeComma(input.value);
+      // 숫자만 허용
+      value = value.replace(/[^0-9]/g, "");
+      if (value) {
+        input.value = addComma(value);
+      } else {
+        input.value = "";
+      }
+    }
+  });
 }
 
 // ── 유틸
@@ -178,7 +220,7 @@ function generateCombos(space, minRem = 50, maxRem = 100) {
       a._cost - b._cost ||
       a.combo.length - b.combo.length ||
       b.remaining - a.remaining ||
-      b.used - a.used
+      b.used - a.used,
   );
 }
 
@@ -187,37 +229,222 @@ function renderSelectableSide(list, sideId, title) {
   sideLists[sideId] = list;
   if (!(sideId in selections)) selections[sideId] = 0;
 
-  let html = `<div class="card"><div class="side-header"><div class="rank-title">${title}</div></div>`;
+  const selectedIndex = selections[sideId];
+  const selectedItem = list[selectedIndex];
+  const selectedCm = comboToCounts(selectedItem);
+  const selectedPrice = new Intl.NumberFormat("ko-KR").format(
+    priceFromCounts(selectedCm),
+  );
+  const selectedRealLines = order
+    .filter((l) => selectedCm[l] > 0)
+    .map((l) => `${realMap[l]}mm x ${selectedCm[l]}`)
+    .join(", ");
+
+  let html = `
+    <div class="card combo-selector">
+      <div class="rank-title" style="margin-bottom: 10px;">${title}</div>
+      <div class="selected-display">
+        <div class="rank-title">선택${selectedIndex + 1}</div>
+        <div class="counts">${formatCounts(selectedCm)}</div>
+        <div class="muted">(실제: ${selectedRealLines})</div>
+        <div style="margin-top:6px;">
+          <span class="remaining-box">여유치수 ${selectedItem.remaining}mm</span>
+          <span class="muted">/ 총 사용 ${selectedItem.used}mm</span>
+        </div>
+        <div style="margin-top:4px;"><strong>예상 비용</strong> ₩${selectedPrice}</div>
+      </div>
+      <button class="change-btn" onclick="openComboModal('${sideId}', '${title}')">변경</button>
+    </div>`;
+
+  return html;
+}
+
+// 모달 열기
+window.openComboModal = function (sideId, title) {
+  const list = sideLists[sideId];
+  const selectedIndex = selections[sideId];
+
+  let modalContent = `
+    <div class="modal-header">
+      <h3>${title}</h3>
+      <button class="modal-close" onclick="closeComboModal()">✕</button>
+    </div>
+    <div class="modal-body">`;
+
   list.forEach((item, idx) => {
     const cm = comboToCounts(item);
     const price = new Intl.NumberFormat("ko-KR").format(priceFromCounts(cm));
-    const checked = selections[sideId] === idx ? "checked" : "";
     const realLines = order
       .filter((l) => cm[l] > 0)
       .map((l) => `${realMap[l]}mm x ${cm[l]}`)
       .join(", ");
+    const activeClass = idx === selectedIndex ? "active" : "";
 
-    html += `
-            <div class="divider">
-              <div class="row">
-                <input class="radio" type="radio" name="pick-${sideId}" id="pick-${sideId}-${idx}" value="${idx}" ${checked}
-                       onchange="onPick('${sideId}', ${idx})" />
-                <label for="pick-${sideId}-${idx}" class="rank-title">선택${
-      idx + 1
-    }</label>
-              </div>
-              <div class="counts">${formatCounts(cm)}</div>
-              <div class="muted">(실제: ${realLines})</div>
-              <div style="margin-top:6px;">
-                <span class="remaining-box">여유치수 ${item.remaining}mm</span>
-                <span class="muted">/ 총 사용 ${item.used}mm</span>
-              </div>
-              <div style="margin-top:4px;"><strong>예상 비용</strong> ₩${price}</div>
-            </div>`;
+    modalContent += `
+      <div class="modal-option ${activeClass}" onclick="selectComboFromModal('${sideId}', ${idx})">
+        <div class="rank-title">선택${idx + 1}</div>
+        <div class="counts">${formatCounts(cm)}</div>
+        <div class="muted">(실제: ${realLines})</div>
+        <div style="margin-top:6px;">
+          <span class="remaining-box">여유치수 ${item.remaining}mm</span>
+          <span class="muted">/ 총 사용 ${item.used}mm</span>
+        </div>
+        <div style="margin-top:4px;"><strong>예상 비용</strong> ₩${price}</div>
+      </div>`;
   });
-  html += "</div>";
-  return html;
+
+  modalContent += `</div>`;
+
+  const modal = document.getElementById("comboModal");
+  const modalContentDiv = modal.querySelector(".modal-content");
+  modalContentDiv.innerHTML = modalContent;
+  modal.style.display = "flex";
+  document.body.style.overflow = "hidden";
+};
+
+// 모달에서 선택
+window.selectComboFromModal = function (sideId, idx) {
+  selections[sideId] = idx;
+  closeComboModal();
+
+  // 해당 카드만 업데이트
+  updateComboDisplay(sideId);
+
+  // 합계 업데이트
+  renderTotals();
+};
+
+// 조합 표시 업데이트
+function updateComboDisplay(sideId) {
+  const list = sideLists[sideId];
+  const selectedIndex = selections[sideId];
+  const selectedItem = list[selectedIndex];
+  const selectedCm = comboToCounts(selectedItem);
+  const selectedPrice = new Intl.NumberFormat("ko-KR").format(
+    priceFromCounts(selectedCm),
+  );
+  const selectedRealLines = order
+    .filter((l) => selectedCm[l] > 0)
+    .map((l) => `${realMap[l]}mm x ${selectedCm[l]}`)
+    .join(", ");
+
+  // 해당 sideId의 카드 찾기
+  const cards = document.querySelectorAll(".combo-selector");
+  cards.forEach((card) => {
+    const changeBtn = card.querySelector(".change-btn");
+    if (changeBtn && changeBtn.getAttribute("onclick").includes(sideId)) {
+      const display = card.querySelector(".selected-display");
+      display.innerHTML = `
+        <div class="rank-title">선택${selectedIndex + 1}</div>
+        <div class="counts">${formatCounts(selectedCm)}</div>
+        <div class="muted">(실제: ${selectedRealLines})</div>
+        <div style="margin-top:6px;">
+          <span class="remaining-box">여유치수 ${selectedItem.remaining}mm</span>
+          <span class="muted">/ 총 사용 ${selectedItem.used}mm</span>
+        </div>
+        <div style="margin-top:4px;"><strong>예상 비용</strong> ₩${selectedPrice}</div>`;
+    }
+  });
 }
+
+// 모달 닫기
+window.closeComboModal = function () {
+  const modal = document.getElementById("comboModal");
+  modal.style.display = "none";
+  document.body.style.overflow = "";
+};
+
+// 모달 배경 클릭시 닫기
+window.onclick = function (event) {
+  const modal = document.getElementById("comboModal");
+  if (event.target === modal) {
+    closeComboModal();
+  }
+};
+
+// 드롭다운 토글
+window.toggleComboList = function (sideId) {
+  const list = document.getElementById(`combo-list-${sideId}`);
+  const arrow = event.currentTarget.querySelector(".dropdown-arrow");
+
+  if (list.style.display === "none") {
+    // 다른 열린 목록 모두 닫기
+    document.querySelectorAll(".combo-list").forEach((l) => {
+      l.style.display = "none";
+    });
+    document.querySelectorAll(".dropdown-arrow").forEach((a) => {
+      a.textContent = "▼";
+    });
+
+    list.style.display = "block";
+    arrow.textContent = "▲";
+  } else {
+    list.style.display = "none";
+    arrow.textContent = "▼";
+  }
+};
+
+// 조합 선택
+window.selectCombo = function (sideId, idx) {
+  selections[sideId] = idx;
+
+  // 해당 변의 UI만 다시 렌더링
+  const card = document
+    .getElementById(`combo-list-${sideId}`)
+    .closest(".combo-selector");
+  const list = sideLists[sideId];
+  const selectedItem = list[idx];
+  const selectedCm = comboToCounts(selectedItem);
+  const selectedPrice = new Intl.NumberFormat("ko-KR").format(
+    priceFromCounts(selectedCm),
+  );
+  const selectedRealLines = order
+    .filter((l) => selectedCm[l] > 0)
+    .map((l) => `${realMap[l]}mm x ${selectedCm[l]}`)
+    .join(", ");
+
+  // 선택된 항목 업데이트
+  const selectedCombo = card.querySelector(".selected-combo");
+  selectedCombo.innerHTML = `
+    <div class="row">
+      <span class="rank-title">선택${idx + 1}</span>
+      <span class="dropdown-arrow">▼</span>
+    </div>
+    <div class="counts">${formatCounts(selectedCm)}</div>
+    <div class="muted">(실제: ${selectedRealLines})</div>
+    <div style="margin-top:6px;">
+      <span class="remaining-box">여유치수 ${selectedItem.remaining}mm</span>
+      <span class="muted">/ 총 사용 ${selectedItem.used}mm</span>
+    </div>
+    <div style="margin-top:4px;"><strong>예상 비용</strong> ₩${selectedPrice}</div>`;
+
+  // onclick 다시 연결
+  selectedCombo.onclick = () => toggleComboList(sideId);
+
+  // 목록 닫기
+  document.getElementById(`combo-list-${sideId}`).style.display = "none";
+
+  // 합계 업데이트
+  renderTotals();
+};
+
+window.onPick = function (sideId, idx) {
+  selections[sideId] = idx;
+  renderTotals();
+};
+
+// 토글 함수 추가
+window.toggleDetail = function (element) {
+  const detail = element.querySelector(".detail-content");
+  if (detail.style.display === "none") {
+    detail.style.display = "";
+    element.classList.add("expanded");
+  } else {
+    detail.style.display = "none";
+    element.classList.remove("expanded");
+  }
+};
+
 window.onPick = function (sideId, idx) {
   selections[sideId] = idx;
   renderTotals();
@@ -232,11 +459,14 @@ function showFloatingTotals(html) {
     document.body.style.paddingBottom = h + 10 + "px";
   });
 }
+
 function hideFloatingTotals() {
-  floatingBar.classList.remove("visible");
-  floatingBar.innerHTML = "";
-  document.body.style.paddingBottom = "";
+  const totalsBox = document.getElementById("totalsBox");
+  if (totalsBox) {
+    totalsBox.innerHTML = "";
+  }
 }
+
 function renderTotals() {
   const totalCounts = { 1200: 0, 900: 0, 600: 0, 400: 0, 300: 0 };
   let any = false;
@@ -250,20 +480,26 @@ function renderTotals() {
     });
     any = true;
   }
+
+  const totalsBox = document.getElementById("totalsBox");
+  if (!totalsBox) return;
+
   if (!any) {
-    hideFloatingTotals();
+    totalsBox.innerHTML = "";
     return;
   }
+
   const cost = new Intl.NumberFormat("ko-KR").format(
-    priceFromCounts(totalCounts)
+    priceFromCounts(totalCounts),
   );
   const html = `
-          <div class="card totals">
-            <div class="rank-title">총 필요 수량 & 비용 (선택 조합 합산)</div>
-            <div class="counts">${formatCounts(totalCounts)}</div>
-            <div style="margin-top:4px;"><strong>예상 비용</strong> ₩${cost}</div>
-          </div>`;
-  showFloatingTotals(html);
+    <div class="card totals" style="margin-bottom:16px;">
+      <div class="rank-title">총 필요 수량 & 비용 (선택 조합 합산)</div>
+      <div class="counts">${formatCounts(totalCounts)}</div>
+      <div style="margin-top:4px;"><strong>예상 비용</strong> ₩${cost}</div>
+    </div>`;
+
+  totalsBox.innerHTML = html;
 }
 
 // ── 계산 버튼
@@ -280,7 +516,9 @@ function onCalculate() {
   Object.keys(sideLists).forEach((k) => delete sideLists[k]);
 
   if (type === "straight") {
-    const L = parseInt(document.getElementById("lengthInput1")?.value);
+    const L = parseInt(
+      removeComma(document.getElementById("lengthInput1")?.value || ""),
+    );
     if (isNaN(L) || L <= 0) {
       resultArea.innerHTML =
         '<p class="no-data">길이를 올바르게 입력해주세요.</p>';
@@ -296,17 +534,21 @@ function onCalculate() {
     }
     let html = "";
     html +=
-      '<div class="card" style="margin-bottom:16px;"><strong>일자 조합에서 하나를 선택하시면 <br>맨 밑에 총 개수와 금액이 나타납니다.<br>전원선 연결 하실분은 여유치수 70mm 이상,<br>커넥터 분리 후 연결하실 분들은 <br>자유롭게 선택해주세요.</strong></div>';
-    html += renderSelectableSide(list, "STRAIGHT", "일자 조합 리스트");
+      '<div class="card" style="margin-bottom:16px;"><strong>기본적으로 가장 저렴한 조합이 선택되어 있습니다.<br>아래 목록을 누르면 <br>여유 치수와 비용이 다른 <br>다양한 조합을 확인하실 수 있습니다.<br>모든 옵션은 설치가 가능합니다.</strong><br><br>💡 선택 팁<br>• 전원선 직접 연결: 여유 치수 70mm 이상 필수<br>• 커넥터 분리 후 연결: 모든 사이즈 자유 선택 가능</div>';
     html += '<div id="totalsBox"></div>';
+    html += renderSelectableSide(list, "STRAIGHT", "일자 조합 리스트");
     resultArea.innerHTML = html;
     renderTotals();
     return;
   }
 
   if (type === "L") {
-    const A = parseInt(document.getElementById("lengthInput1")?.value);
-    const B = parseInt(document.getElementById("lengthInput2")?.value);
+    const A = parseInt(
+      removeComma(document.getElementById("lengthInput1")?.value || ""),
+    );
+    const B = parseInt(
+      removeComma(document.getElementById("lengthInput2")?.value || ""),
+    );
     if ([A, B].some((v) => isNaN(v) || v <= 0)) {
       resultArea.innerHTML =
         '<p class="no-data">두 변 길이를 올바르게 입력해주세요.</p>';
@@ -323,27 +565,34 @@ function onCalculate() {
     }
     let html = "";
     html +=
-      '<div class="card" style="margin-bottom:16px;"><strong>A,B 각 변의 조합을 하나씩 선택하시면 <br>맨 밑에 총 개수와 금액이 나타납니다.<br>전원선 연결 하실분은 여유치수 70mm 이상,<br>커넥터 분리 후 연결하실 분들은 <br>자유롭게 선택해주세요.</strong></div>';
-    html += renderSelectableSide(listA, "A", "변 A 조합 리스트");
-    html += renderSelectableSide(listB, "B", "변 B 조합 리스트");
+      '<div class="card" style="margin-bottom:16px;"><strong>기본적으로 가장 저렴한 조합이 선택되어 있습니다.<br>아래 목록을 누르면 <br>여유 치수와 비용이 다른 <br>다양한 조합을 확인하실 수 있습니다.<br>모든 옵션은 설치가 가능합니다.</strong><br><br>💡 선택 팁<br>• 전원선 직접 연결: 여유 치수 70mm 이상 필수<br>• 커넥터 분리 후 연결: 모든 사이즈 자유 선택 가능</div>';
     html += '<div id="totalsBox"></div>';
+    html += renderSelectableSide(listA, "A", "A 조합 리스트");
+    html += renderSelectableSide(listB, "B", "B 조합 리스트");
     resultArea.innerHTML = html;
     renderTotals();
     return;
   }
 
   if (type === "square") {
-    const S1 = parseInt(document.getElementById("lengthInput1")?.value);
-    const S2 = parseInt(document.getElementById("lengthInput2")?.value);
-    const S3 = parseInt(document.getElementById("lengthInput3")?.value);
-    const S4 = parseInt(document.getElementById("lengthInput4")?.value);
+    const S1 = parseInt(
+      removeComma(document.getElementById("lengthInput1")?.value || ""),
+    );
+    const S2 = parseInt(
+      removeComma(document.getElementById("lengthInput2")?.value || ""),
+    );
+    const S3 = parseInt(
+      removeComma(document.getElementById("lengthInput3")?.value || ""),
+    );
+    const S4 = parseInt(
+      removeComma(document.getElementById("lengthInput4")?.value || ""),
+    );
     if ([S1, S2, S3, S4].some((v) => isNaN(v) || v <= 0)) {
       resultArea.innerHTML =
         '<p class="no-data">4개 변 길이를 모두 올바르게 입력해주세요.</p>';
       hideFloatingTotals();
       return;
     }
-    // 사각은 요청대로 여유 50~120으로 확장
     const lists = [
       generateCombos(S1, 50, 120),
       generateCombos(S2, 50, 120),
@@ -358,12 +607,12 @@ function onCalculate() {
     }
     let html = "";
     html +=
-      '<div class="card" style="margin-bottom:16px;"><strong>A,B,C,D 각 변의 조합을 하나씩 선택하시면 <br>맨 밑에 총 개수와 금액이 나타납니다.<br>전원선 연결 하실분은 여유치수 70mm 이상,<br>커넥터 분리 후 연결하실 분들은 <br>자유롭게 선택해주세요.</strong></div>';
-    html += renderSelectableSide(lists[0], "S1", "변 A 조합 리스트");
-    html += renderSelectableSide(lists[1], "S2", "변 B 조합 리스트");
-    html += renderSelectableSide(lists[2], "S3", "변 C 조합 리스트");
-    html += renderSelectableSide(lists[3], "S4", "변 D 조합 리스트");
+      '<div class="card" style="margin-bottom:16px;"><strong>기본적으로 가장 저렴한 조합이 선택되어 있습니다.<br>아래 목록을 누르면 <br>여유 치수와 비용이 다른 <br>다양한 조합을 확인하실 수 있습니다.<br>모든 옵션은 설치가 가능합니다.</strong><br><br>💡 선택 팁<br>• 전원선 직접 연결: 여유 치수 70mm 이상 필수<br>• 커넥터 분리 후 연결: 모든 사이즈 자유 선택 가능</div>';
     html += '<div id="totalsBox"></div>';
+    html += renderSelectableSide(lists[0], "S1", "A 조합 리스트");
+    html += renderSelectableSide(lists[1], "S2", "B 조합 리스트");
+    html += renderSelectableSide(lists[2], "S3", "C 조합 리스트");
+    html += renderSelectableSide(lists[3], "S4", "D 조합 리스트");
     resultArea.innerHTML = html;
     renderTotals();
   }
@@ -375,7 +624,7 @@ function pauseYoutube() {
   if (!iframe) return;
   iframe.contentWindow?.postMessage(
     JSON.stringify({ event: "command", func: "pauseVideo", args: [] }),
-    "*"
+    "*",
   );
 }
 

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
   <head>
     <title>남영 T5 자동계산기</title>
@@ -133,7 +133,7 @@
   </head>
   <body>
     <div class="wrapper">
-      <h1>폴라베어 남영T5<br />자동계산기</h1>
+      <h1 style="font-size: 0.5rm">폴라베어 남영T5 자동계산기</h1>
 
       <!-- ▣ 타입 선택 카드 -->
       <div
@@ -150,7 +150,14 @@
               src="https://www.youtube.com/embed/61PrLZLHEvY?enablejsapi=1"
               title="YouTube video player"
               frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allow="
+                accelerometer;
+                autoplay;
+                clipboard-write;
+                encrypted-media;
+                gyroscope;
+                picture-in-picture;
+              "
               allowfullscreen
             ></iframe>
           </div>
@@ -178,7 +185,7 @@
       <div id="calcArea" style="display: none">
         <!-- 타입별 안내 이미지 -->
         <div id="typeImageContainer" class="img-wrap" style="display: none">
-          <img id="typeImage" src="" width="300" alt="측정 가이드" />
+          <img id="typeImage" src="" alt="측정 가이드" />
         </div>
 
         <p class="lead" style="margin-top: 16px; margin-bottom: 20px">
@@ -214,6 +221,11 @@
 
       <!-- 플로팅 합계 바 -->
       <div id="floatingTotals" class="floating-bar"></div>
+
+      <!-- 조합 선택 모달 -->
+      <div id="comboModal" class="modal">
+        <div class="modal-content"></div>
+      </div>
     </div>
 
     <!-- ===== JS ===== -->
