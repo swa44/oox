@@ -3,104 +3,579 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>OOX</title>
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-      body {
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-        font-family:
-          "SF Pro Display",
-          -apple-system,
-          sans-serif;
-        color: white;
-      }
-      .container {
-        text-align: center;
-        padding: 40px;
-      }
-      .time {
-        font-size: 6rem;
-        font-weight: 700;
-        margin-bottom: 1rem;
-        text-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-      }
-      .date {
-        font-size: 1.5rem;
-        margin-bottom: 3rem;
-        opacity: 0.9;
-      }
-      .quote {
-        font-size: 1.8rem;
-        font-style: italic;
-        max-width: 600px;
-        line-height: 1.6;
-        opacity: 0.95;
-      }
-      @media (max-width: 600px) {
-        .time {
-          font-size: 3rem;
-        }
-        .date {
-          font-size: 1rem;
-        }
-        .quote {
-          font-size: 1.2rem;
-        }
-      }
-    </style>
+    <title>폴라베어 인테리어 조명 자동 견적 계산기</title>
+    <meta
+      name="description"
+      content="12V/24V 블럭바, T5, 매립라인조명 등 셀프 인테리어에 필요한 조명 자재 소요량을 자동으로 계산하세요. 전문가 수준의 견적을 1분 만에 확인할 수 있습니다."
+    />
+    <meta
+      property="og:title"
+      content="폴라베어 조명 계산기 - 셀프 인테리어 필수 도구"
+    />
+    <meta
+      property="og:description"
+      content="복잡한 조명 자재 계산, 이제 클릭 한 번으로 끝내세요."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://oox.kr" />
+
+    <link
+      rel="apple-touch-icon-precomposed"
+      sizes="57x57"
+      href="./assets/57x57.png"
+    />
+    <link
+      rel="apple-touch-icon-precomposed"
+      sizes="72x72"
+      href="./assets/72x72.png"
+    />
+    <link
+      rel="apple-touch-icon-precomposed"
+      sizes="60x60"
+      href="./assets/60x60.png"
+    />
+    <link
+      rel="apple-touch-icon-precomposed"
+      sizes="76x76"
+      href="./assets/76x76.png"
+    />
+    <link
+      rel="apple-touch-icon-precomposed"
+      sizes="114x114"
+      href="./assets/114x114.png"
+    />
+    <link
+      rel="apple-touch-icon-precomposed"
+      sizes="120x120"
+      href="./assets/120x120.png"
+    />
+    <link
+      rel="apple-touch-icon-precomposed"
+      sizes="144x144"
+      href="./assets/144x144.png"
+    />
+    <link
+      rel="apple-touch-icon-precomposed"
+      sizes="152x152"
+      href="./assets/152x152.png"
+    />
+    <link rel="icon" type="image/png" href="./assets/16x16.png" sizes="16x16" />
+    <link rel="icon" type="image/png" href="./assets/32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="./assets/96x96.png" sizes="96x96" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="./assets/128x128.png"
+      sizes="128x128"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      href="./assets/196x196.png"
+      sizes="196x196"
+    />
+    <meta name="msapplication-TileImage" content="" />
+    <meta name="msapplication-square70x70logo" content="./assets/70x70.png" />
+    <meta
+      name="msapplication-square150x150logo"
+      content="./assets/150x150.png"
+    />
+    <meta name="msapplication-square310x150logo" content="" />
+    <meta
+      name="msapplication-square310x310logo"
+      content="./assets/310x310.png"
+    />
+
+    <!-- Google AdSense -->
     <script
       async
       src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9910941411948866"
       crossorigin="anonymous"
     ></script>
-  </head>
-  <body>
-    <div class="container">
-      <div class="time" id="time"></div>
-      <div class="date" id="date"></div>
-      <div class="quote" id="quote"></div>
-    </div>
 
-    <script>
-      const quotes = [
-        "오늘도 좋은 하루 되세요!",
-        "작은 진전도 진전입니다.",
-        "할 수 있다고 믿으면, 이미 절반은 이룬 것입니다.",
-        "완벽한 때를 기다리지 마세요. 지금이 완벽한 때입니다.",
-        "당신은 생각보다 강합니다.",
-      ];
+    <!-- Google tag (gtag.js) -->
+    <!-- 메인 페이지용 별도 측정 ID가 없다면 생성 필요, 여기서는 공란이나 주석 처리 -->
+    <!-- 
+    <script async src="https://www.googletagmanager.com/gtag/js?id=YOUR_ID"></script> 
+    -->
 
-      function updateTime() {
-        const now = new Date();
-        const time = now.toLocaleTimeString("ko-KR", {
-          hour: "2-digit",
-          minute: "2-digit",
-          second: "2-digit",
-        });
-        const date = now.toLocaleDateString("ko-KR", {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-          weekday: "long",
-        });
-
-        document.getElementById("time").textContent = time;
-        document.getElementById("date").textContent = date;
+    <style>
+      :root {
+        --primary: #2563eb;
+        --secondary: #1e40af;
+        --text-dark: #111827;
+        --text-gray: #4b5563;
+        --bg-light: #f3f4f6;
+        --white: #ffffff;
       }
 
-      document.getElementById("quote").textContent =
-        quotes[Math.floor(Math.random() * quotes.length)];
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-      updateTime();
-      setInterval(updateTime, 1000);
-    </script>
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.6;
+        color: var(--text-dark);
+        background-color: var(--bg-light);
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      /* Header */
+      header {
+        background: var(--white);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .nav-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 1rem 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--primary);
+        letter-spacing: -0.5px;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 1.5rem;
+      }
+
+      .nav-links a {
+        color: var(--text-gray);
+        font-weight: 500;
+        transition: color 0.2s;
+      }
+
+      .nav-links a:hover {
+        color: var(--primary);
+      }
+
+      /* Hero Section */
+      .hero {
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        color: white;
+        text-align: center;
+        padding: 5rem 1.5rem;
+      }
+
+      .hero h1 {
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+        line-height: 1.2;
+      }
+
+      .hero p {
+        font-size: 1.2rem;
+        opacity: 0.9;
+        max-width: 600px;
+        margin: 0 auto 2rem;
+      }
+
+      .hero-btn {
+        display: inline-block;
+        background: white;
+        color: var(--primary);
+        padding: 0.8rem 2rem;
+        border-radius: 999px;
+        font-weight: 700;
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+      }
+
+      .hero-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      }
+
+      /* Tools Grid */
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 4rem 1.5rem;
+      }
+
+      .section-title {
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+
+      .section-title h2 {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .section-title p {
+        color: var(--text-gray);
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+      }
+
+      .card {
+        background: var(--white);
+        border-radius: 12px;
+        padding: 0;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .card-img-wrapper {
+        height: 200px;
+        background-color: #e5e7eb;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .card-img-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s;
+      }
+
+      .card:hover .card-img-wrapper img {
+        transform: scale(1.05);
+      }
+
+      .badge {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        font-weight: 600;
+      }
+
+      .card-content {
+        padding: 1.5rem;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .card-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+      }
+
+      .card-desc {
+        color: var(--text-gray);
+        font-size: 0.95rem;
+        margin-bottom: 1.5rem;
+        flex: 1;
+      }
+
+      .card-footer {
+        margin-top: auto;
+      }
+
+      .btn-link {
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding: 0.8rem;
+        background: var(--primary);
+        color: white;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: background 0.2s;
+      }
+
+      .btn-link:hover {
+        background: var(--secondary);
+      }
+
+      /* Info Content Section (For AdSense/SEO) */
+      .info-section {
+        background: var(--white);
+        padding: 4rem 1.5rem;
+        border-top: 1px solid #e5e7eb;
+      }
+
+      .info-content {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .info-content h3 {
+        font-size: 1.5rem;
+        margin: 2rem 0 1rem;
+      }
+
+      .info-content p {
+        margin-bottom: 1rem;
+        color: var(--text-gray);
+      }
+
+      /* Footer */
+      footer {
+        background: #111827;
+        color: #9ca3af;
+        padding: 3rem 1.5rem;
+        text-align: center;
+      }
+
+      footer p {
+        margin-bottom: 0.5rem;
+      }
+
+      .footer-links a {
+        margin: 0 10px;
+        font-size: 0.9rem;
+      }
+
+      .footer-links a:hover {
+        color: white;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .hero h1 {
+          font-size: 2rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="nav-container">
+        <a href="/" class="logo">POLARBEAR Calculator</a>
+        <nav class="nav-links">
+          <a href="https://smartstore.naver.com/ahnsshop" target="_blank"
+            >주문하러가기</a
+          >
+        </nav>
+      </div>
+    </header>
+
+    <section class="hero">
+      <h1>
+        완벽한 조명 인테리어,<br />
+        이제 클릭 몇 번으로 계산하세요
+      </h1>
+      <p>
+        전문가가 사용하는 알고리즘 그대로, 자재 소요량부터 견적까지<br />
+        가장 스마트한 조명 계산기 서비스를 제공합니다.
+      </p>
+      <a href="#tools" class="hero-btn">지금 시작하기</a>
+    </section>
+
+    <div id="tools" class="container">
+      <div class="section-title">
+        <h2>어떤 조명을 설치하시나요?</h2>
+        <p>설치하려는 조명 종류를 선택하면 맞춤형 계산기가 실행됩니다.</p>
+      </div>
+
+      <div class="grid">
+        <!-- 1. T5 남영 -->
+        <article class="card">
+          <div class="card-img-wrapper">
+            <img
+              src="../assets/t5nammain.jpg"
+              alt="남영 T5 간접조명"
+              loading="lazy"
+            />
+            <span class="badge">BEST</span>
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">남영 T5 간접조명</h3>
+            <p class="card-desc">
+              가장 대중적이고 가성비 좋은 간접조명 솔루션입니다. 우물천장,
+              커튼박스 등 다양한 곳에 활용 가능합니다.
+            </p>
+            <div class="card-footer">
+              <a href="/t5" class="btn-link">계산하기</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 2. T5 누빔 -->
+        <article class="card">
+          <div class="card-img-wrapper">
+            <img
+              src="./t5nu/assets/t5numain.jpg"
+              alt="누빔 T5 끊김없는 조명"
+              loading="lazy"
+            />
+            <span class="badge">PREMIUM</span>
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">누빔 T5 (Seamless)</h3>
+            <p class="card-desc">
+              빛 끊김이 없는 고급형 T5입니다. 더욱 자연스럽고 고급스러운 라인
+              조명 효과를 연출해보세요.
+            </p>
+            <div class="card-footer">
+              <a href="/t5nu" class="btn-link">계산하기</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 3. 매립라인조명 -->
+        <article class="card">
+          <div class="card-img-wrapper">
+            <!-- 임시 이미지: 12vbb 썸네일 사용하거나 mline 가이드 사용 -->
+            <img
+              src="./mline/images/spec-guide.jpg"
+              alt="매립 라인조명"
+              loading="lazy"
+            />
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">매립 라인조명</h3>
+            <p class="card-desc">
+              천장에 매립하여 모던하고 심플한 인테리어를 완성합니다. 일자, ㄱ자,
+              ㅁ자 등 다양한 형태를 지원합니다.
+            </p>
+            <div class="card-footer">
+              <a href="/mline" class="btn-link">계산하기</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 4. 12V 블럭바 -->
+        <article class="card">
+          <div class="card-img-wrapper">
+            <img
+              src="./12vbb/assets/thumb_n1.png"
+              alt="12V 블럭바"
+              loading="lazy"
+            />
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">12V 블럭바</h3>
+            <p class="card-desc">
+              얇고 슬림하여 좁은 공간 설치에 최적화된 저전압 LED 바입니다. 직렬
+              및 병렬 연결 계산을 지원합니다.
+            </p>
+            <div class="card-footer">
+              <a href="/12vbb" class="btn-link">계산하기</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 5. 24V 블럭바 -->
+        <article class="card">
+          <div class="card-img-wrapper">
+            <img
+              src="./24vbb/assets/thumb_n1.png"
+              alt="24V 블럭바"
+              loading="lazy"
+            />
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">24V 블럭바</h3>
+            <p class="card-desc">
+              12V 대비 더 길게 연결 가능하고 밝기가 뛰어납니다. 상업 공간이나
+              넓은 거실의 간접 조명으로 강력 추천합니다.
+            </p>
+            <div class="card-footer">
+              <a href="/24vbb" class="btn-link">계산하기</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <!-- 정보성 콘텐츠 (AdSense & SEO용) -->
+    <section class="info-section">
+      <div class="info-content">
+        <div class="section-title">
+          <h2>왜 폴라베어 계산기인가요?</h2>
+          <p>셀프 인테리어의 가장 큰 난관, 자재 산출을 도와드립니다.</p>
+        </div>
+
+        <h3>💡 정확한 자재 산출</h3>
+        <p>
+          조명을 설치할 공간의 길이만 입력하세요. 필요한 조명 모듈의 개수, 전원
+          장치(SMPS)의 용량, 필요한 부속품까지 자동으로 계산해 드립니다. 더 이상
+          자재가 부족해서 공사가 중단되거나, 너무 많이 사서 낭비하는 일이
+          없습니다.
+        </p>
+
+        <h3>🔧 다양한 설치 환경 지원</h3>
+        <p>
+          일자형 간접박스부터 우물천장(ㅁ자), ㄱ자 코너까지 다양한 설치 환경에
+          맞춘 최적의 배치를 제안합니다. 특히 블럭바의 경우 직렬 연결과 병렬
+          연결 방식에 따른 전압 강하 문제까지 고려하여 안전한 설치 가이드를
+          제공합니다.
+        </p>
+
+        <h3>✨ 셀프 인테리어 가이드</h3>
+        <p>
+          초보자도 전문가처럼 시공할 수 있도록 돕습니다. 각 계산기 페이지에서는
+          상세한 설치 다이어그램과 주의사항을 확인할 수 있으며, 연결 방식에 따른
+          배선 가이드도 함께 제공됩니다.
+        </p>
+      </div>
+    </section>
+
+    <!-- AdSense 하단 광고 영역 -->
+    <div style="text-align: center; padding: 20px">
+      <ins
+        class="adsbygoogle"
+        style="display: block"
+        data-ad-client="ca-pub-9910941411948866"
+        data-ad-slot="YOUR_AD_SLOT_ID"
+        data-ad-format="auto"
+        data-full-width-responsive="true"
+      ></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+
+    <footer>
+      <div class="nav-container" style="display: block">
+        <p>&copy; 2024 (주)폴라베어. All rights reserved.</p>
+        <div class="footer-links" style="margin-top: 10px">
+          <a href="#">이용약관</a>
+          <a href="#">개인정보처리방침</a>
+          <a href="https://ordersystem.폴라베어.kr">관리자 문의</a>
+        </div>
+        <p style="margin-top: 20px; font-size: 0.8rem; opacity: 0.6">
+          본 서비스에서 제공하는 계산 결과는 시공 편의를 위한 참고용이며, 실제
+          현장 상황에 따라 차이가 있을 수 있습니다.
+        </p>
+      </div>
+    </footer>
   </body>
 </html>

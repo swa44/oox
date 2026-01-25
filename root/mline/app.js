@@ -128,14 +128,14 @@
   function countPieces(counts) {
     return [1000, 500, 400, 300, 200, 100].reduce(
       (s, mm) => s + (counts[mm] || 0),
-      0
+      0,
     );
   }
 
   function sumWatts(specKey, counts) {
     return [1000, 500, 400, 300, 200, 100].reduce(
       (w, mm) => w + (counts[mm] || 0) * (WATTS[specKey][mm] || 0),
-      0
+      0,
     );
   }
 
@@ -243,7 +243,7 @@
     const subtotal = items.reduce((s, it) => s + it.count * it.price, 0);
     const totalEff = items.reduce(
       (s, it) => s + Math.round(it.cap * LOAD_LIMIT) * it.count,
-      0
+      0,
     );
     const totalCap = items.reduce((s, it) => s + it.cap * it.count, 0);
 
@@ -253,11 +253,11 @@
   function buildComboFromItems(items) {
     const subtotal = items.reduce(
       (s, it) => s + SMPS_PRICES[it.cap] * it.count,
-      0
+      0,
     );
     const eff = items.reduce(
       (s, it) => s + Math.round(it.cap * LOAD_LIMIT) * it.count,
-      0
+      0,
     );
     const cap = items.reduce((s, it) => s + it.cap * it.count, 0);
     const normItems = items
@@ -297,7 +297,7 @@
         const pct = (alloc / cap) * 100;
 
         out += `<div class="muted" style="margin:2px 0 6px;">[${alloc.toFixed(
-          0
+          0,
         )}W사용] (부하 ${pct.toFixed(1)}% / 70% 기준 충족)</div>`;
         remaining -= alloc;
       }
@@ -357,8 +357,8 @@
       type === "serial"
         ? "일자연결"
         : type === "parallel"
-        ? "ㄱ자연결"
-        : "ㅁ자연결";
+          ? "ㄱ자연결"
+          : "ㅁ자연결";
 
     lengthSection.style.display = "block";
     specSelect.value = "";
@@ -377,13 +377,13 @@
     const sampleImg = document.getElementById("sampleImg");
 
     if (type === "serial") {
-      sampleImg.src = "./images/sample-serial.jpg"; // 일자연결 이미지 경로
+      sampleImg.src = "/mline/images/sample-serial.jpg"; // 일자연결 이미지 경로
       sampleImageDiv.style.display = "block";
     } else if (type === "parallel") {
-      sampleImg.src = "./images/sample-parallel.jpg"; // ㄱ자연결 이미지 경로
+      sampleImg.src = "/mline/images/sample-parallel.jpg"; // ㄱ자연결 이미지 경로
       sampleImageDiv.style.display = "block";
     } else if (type === "square") {
-      sampleImg.src = "./images/sample-square.jpg"; // ㅁ자연결 이미지 경로
+      sampleImg.src = "/mline/images/sample-square.jpg"; // ㅁ자연결 이미지 경로
       sampleImageDiv.style.display = "block";
     } else {
       sampleImageDiv.style.display = "none";
@@ -832,7 +832,7 @@
     `);
 
     const smpsCardHtml = card(
-      renderSmpsCombo(totalWatt, smpsCombo, equalizeMsg)
+      renderSmpsCombo(totalWatt, smpsCombo, equalizeMsg),
     );
 
     const linesListHtml_muted = (linesArr.length ? linesArr : ["없음"])
@@ -847,8 +847,8 @@
             .map(
               (it) =>
                 `<div class="muted">• SMPS ${it.cap} W × ${fmt(
-                  it.count
-                )}개</div>`
+                  it.count,
+                )}개</div>`,
             )
             .join("")
         : `<div class="muted">• 없음</div>`;
@@ -860,7 +860,7 @@
         <strong>📏 시공 안내</strong><br>
         수월한 시공을 위해 사이드캡 공간(양쪽 5mm, 총 10mm)을 고려하여 다음과 같이 설치 공간을 마련해 주세요.<br>
         입력하신 길이(${fmt(L_serial)}mm) + 10mm → <strong>${fmt(
-          L_serial + 10
+          L_serial + 10,
         )}mm</strong>
       </div>`;
       }
@@ -874,10 +874,10 @@
         <strong>📏 시공 안내</strong><br>
         수월한 시공을 위해 기역자형 길이 ${corner}mm를 고려하여 다음과 같이 설치 공간을 마련해 주세요.<br>
         A변(2개): ${fmt(A_len)}mm + ${fmt(2 * corner)}mm → <strong>${fmt(
-          aTot
+          aTot,
         )}mm</strong> 각각<br>
         B변(2개): ${fmt(B_len)}mm + ${fmt(2 * corner)}mm → <strong>${fmt(
-          bTot
+          bTot,
         )}mm</strong> 각각
       </div>`;
       }
@@ -892,7 +892,7 @@
         <strong>📏 시공 안내</strong><br>
         수월한 시공을 위해 사이드캡 여유공간(양쪽 5mm, 총 10mm)과 기역자형 길이 ${corner}mm를 고려하여 다음과 같이 설치 공간을 마련해 주세요.<br>
         A변: ${fmt(A_len)}mm + ${fmt(add)}mm → <strong>${fmt(
-          aTot
+          aTot,
         )}mm</strong><br>
         B변: ${fmt(B_len)}mm + ${fmt(add)}mm → <strong>${fmt(bTot)}mm</strong>
       </div>`;
@@ -912,10 +912,10 @@
       ${smpsItemsMuted}
 
       <div class="total-line" style="margin-top:10px;"><strong>총가격:</strong> ₩${fmt(
-        grandTotal
+        grandTotal,
       )}</div>
     `,
-      "totals"
+      "totals",
     );
 
     resultArea.innerHTML =
