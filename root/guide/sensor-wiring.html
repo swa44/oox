@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>센서등 교체 및 배선 가이드 - 폴라베어</title>
+    <meta
+      name="description"
+      content="현관 신발장 하부 간접조명에 센서를 연결하는 방법, 히든 센서와 노출 센서의 차이, 3선식 센서 결선법 등 실전 가이드를 제공합니다."
+    />
+    <style>
+      :root {
+        --primary: #2563eb;
+        --secondary: #1e40af;
+        --text-dark: #111827;
+        --text-gray: #4b5563;
+        --bg-light: #f3f4f6;
+      }
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.8;
+        color: var(--text-dark);
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: var(--bg-light);
+      }
+      .content-box {
+        background: white;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      }
+      h1 {
+        font-size: 2.2rem;
+        margin-bottom: 2rem;
+        color: #111;
+        letter-spacing: -1px;
+      }
+      h2 {
+        font-size: 1.6rem;
+        margin-top: 3rem;
+        margin-bottom: 1.5rem;
+        color: var(--primary);
+        border-bottom: 2px solid #eee;
+        padding-bottom: 10px;
+      }
+      h3 {
+        font-size: 1.3rem;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        color: #333;
+      }
+      p {
+        margin-bottom: 1.5rem;
+        font-size: 1.05rem;
+        word-break: keep-all;
+        text-align: justify;
+      }
+      .nav-btn {
+        display: inline-block;
+        padding: 10px 20px;
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 20px;
+        color: #555;
+        text-decoration: none;
+        font-weight: 600;
+        margin-bottom: 20px;
+        transition: all 0.2s;
+      }
+      .nav-btn:hover {
+        background: #f9f9f9;
+        color: var(--primary);
+        border-color: var(--primary);
+      }
+      .highlight {
+        background: #fff1f2;
+        padding: 20px;
+        border-radius: 8px;
+        border-left: 4px solid #be123c;
+        margin: 20px 0;
+      }
+      .code-block {
+        background: #1f2937;
+        color: #fff;
+        padding: 15px;
+        border-radius: 8px;
+        font-family: monospace;
+        overflow-x: auto;
+        margin: 20px 0;
+      }
+      footer {
+        margin-top: 50px;
+        text-align: center;
+        color: #888;
+        font-size: 0.9rem;
+        border-top: 1px solid #ddd;
+        padding-top: 20px;
+      }
+    </style>
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9910941411948866"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <a href="/" class="nav-btn">← 메인으로 돌아가기</a>
+    <div class="content-box">
+      <h1>현관 신발장 T5 간접조명, 센서는 어떻게 연결할까?</h1>
+      <p>
+        현관문을 열었을 때 신발장 아래에서 은은하게 켜지는 간접조명은 호텔 같은
+        분위기를 연출하는 최고의 아이템입니다. 하지만 많은 초보자분들이 '센서
+        연결' 단계에서 멘붕에 빠지곤 합니다. 기존 천장 센서등과 연동하는
+        방법부터, 별도 재실 감지 센서를 설치하는 방법까지 모두 정리해 드립니다.
+      </p>
+
+      <!-- AdSense -->
+      <ins
+        class="adsbygoogle"
+        style="display: block"
+        data-ad-client="ca-pub-9910941411948866"
+        data-ad-slot="9876543210"
+        data-ad-format="auto"
+        data-full-width-responsive="true"
+      ></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+
+      <h2>1. 가장 쉬운 방법: 천장 센서등 라인 활용하기</h2>
+      <p>
+        이미 현관 천장에는 사람이 오면 켜지는 센서등이나 매입등이 있을 것입니다.
+        신발장 하부 간접조명을 설치할 때 가장 깔끔한 방법은 이 천장등과 배선을
+        연결하는 것입니다. 이렇게 하면 천장 조명이 켜질 때 신발장 조명도 동시에
+        켜지는 '동기화'가 이루어집니다.
+      </p>
+      <p>
+        방법은 간단합니다. 천장 등기구를 떼어내면 전원선(2가닥)이 나와 있을
+        텐데, 이 전원에서 선을 따서 신발장 뒤 편으로 내리는 것입니다. 단, 전선
+        매립이 어려운 경우 노출 몰딩이나 등박스 마감이 필요할 수 있습니다.
+      </p>
+
+      <h2>2. 별도 센서 설치하기 (재실 감지 센서)</h2>
+      <p>
+        천장 배선을 건드리기 어렵거나, 신발장 근처에 콘센트가 있다면 별도의
+        '220V 센서 모듈'을 사용하는 것이 좋습니다. T5 조명을 위한 센서는 크게 두
+        가지가 있습니다.
+      </p>
+
+      <h3>A. 노출형 센서 (PIR)</h3>
+      <p>
+        동그란 돔 형태로 생긴 일반적인 센서입니다. 가격이 저렴하고 감도가
+        좋습니다. 다만 센서가 밖으로 보여야 하므로 미관상 조금 아쉬울 수
+        있습니다.
+      </p>
+
+      <h3>B. 매입형/히든 센서 (마이크로웨이브)</h3>
+      <p>
+        최근 인기 있는 방식입니다. 전파(Microwave)를 이용해 움직임을 감지하므로,
+        얇은 나무판이나 석고보드 뒤에 숨겨놔도 작동합니다. 신발장 안쪽에 센서를
+        숨길 수 있어 외관이 매우 깔끔합니다. 단, 금속 장애물은 통과하지 못하며
+        감도가 너무 예민해(벽 너머 사람 감지) 오작동할 수 있으니 감도 조절이
+        가능한 제품을 추천합니다.
+      </p>
+
+      <h2>3. 3선식 센서? 배선이 왜 3개지?</h2>
+      <p>
+        센서 모듈을 사보면 전선 구멍이 3개 또는 4개라서 당황하는 경우가
+        많습니다. (입력 2개, 출력 2개가 명확하면 쉽지만요)
+      </p>
+      <ul>
+        <li>
+          <strong>검은색/흰색 (입력):</strong> 벽이나 콘센트에서 오는 220V
+          전원을 연결합니다.
+        </li>
+        <li><strong>빨간색 (출력):</strong> 조명(부하)으로 가는 선입니다.</li>
+      </ul>
+      <p>
+        3선식의 경우 보통 '공통선(Common Line, 주로 흰색)'을 입력과 조명이 같이
+        씁니다. 즉, 전원선 한 가닥은 센서와 조명에 바로 물리고, 나머지 전원선 한
+        가닥만 센서를 거쳐서(스위칭되어) 조명으로 들어가는 구조입니다.
+      </p>
+
+      <div class="highlight">
+        <strong>⚠️ 안전 경고:</strong><br />
+        센서 작업은 항상 차단기를 내리고 해야 합니다. 또한 센서마다 허용
+        용량(Wattage)이 있으므로, 너무 많은 조명을 하나의 센서에 물리면 센서
+        접점이 타버려 고장의 원인이 됩니다. 보통 가정용 간접 센서는 60~100W 이내
+        사용을 권장합니다.
+      </div>
+
+      <h2>4. 건전지형 무선 센서등은 어떨까?</h2>
+      <p>
+        배선 작업이 너무 힘들다면 건전지형이나 충전식 바(Bar) 조명도 대안이 될
+        수 있습니다. 하지만 매번 충전해야 하는 번거로움이 있고, 유선 T5에 비해
+        광량(밝기)이 현저히 약하기 때문에 '안내등' 수준으로만 기대하는 것이
+        좋습니다.
+      </p>
+    </div>
+    <footer><p>&copy; 2024 (주)폴라베어</p></footer>
+  </body>
+</html>

@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LED 수명 2배로 늘리는 관리법 - 폴라베어</title>
+    <meta
+      name="description"
+      content="반영구적이라던 LED가 왜 금방 고장 날까? 발열 관리, 정격 전압 준수 등 LED 수명을 지키는 핵심 노하우를 공개합니다."
+    />
+    <style>
+      :root {
+        --primary: #2563eb;
+        --secondary: #1e40af;
+        --text-dark: #111827;
+        --text-gray: #4b5563;
+        --bg-light: #f3f4f6;
+      }
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.8;
+        color: var(--text-dark);
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: var(--bg-light);
+      }
+      .content-box {
+        background: white;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      }
+      h1 {
+        font-size: 2.2rem;
+        margin-bottom: 2rem;
+        color: #111;
+        letter-spacing: -1px;
+      }
+      h2 {
+        font-size: 1.6rem;
+        margin-top: 3rem;
+        margin-bottom: 1.5rem;
+        color: var(--primary);
+        border-bottom: 2px solid #eee;
+        padding-bottom: 10px;
+      }
+      h3 {
+        font-size: 1.3rem;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        color: #333;
+      }
+      p {
+        margin-bottom: 1.5rem;
+        font-size: 1.05rem;
+        word-break: keep-all;
+        text-align: justify;
+      }
+      .nav-btn {
+        display: inline-block;
+        padding: 10px 20px;
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 20px;
+        color: #555;
+        text-decoration: none;
+        font-weight: 600;
+        margin-bottom: 20px;
+        transition: all 0.2s;
+      }
+      .nav-btn:hover {
+        background: #f9f9f9;
+        color: var(--primary);
+        border-color: var(--primary);
+      }
+      .fact-check {
+        background: #fffbeb;
+        padding: 20px;
+        border-radius: 8px;
+        border: 1px solid #fcd34d;
+        margin: 20px 0;
+        color: #92400e;
+      }
+      footer {
+        margin-top: 50px;
+        text-align: center;
+        color: #888;
+        font-size: 0.9rem;
+        border-top: 1px solid #ddd;
+        padding-top: 20px;
+      }
+    </style>
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9910941411948866"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <a href="/" class="nav-btn">← 메인으로 돌아가기</a>
+    <div class="content-box">
+      <h1>반영구적이라던 우리 집 LED, 왜 자꾸 고장 날까?</h1>
+      <p>
+        LED 조명의 수명은 이론적으로 3만~5만 시간이라고 합니다. 하루 8시간씩
+        켜도 10년 이상 써야 정상이죠. 그런데 막상 설치해보면 1~2년 만에 불이
+        깜빡거리거나 어두워지는 경험을 하게 됩니다. 원인은 '칩'이 아니라
+        '열(Heat)'과 '전기(Power)'에 있습니다.
+      </p>
+
+      <!-- AdSense -->
+      <ins
+        class="adsbygoogle"
+        style="display: block"
+        data-ad-client="ca-pub-9910941411948866"
+        data-ad-slot="1234567890"
+        data-ad-format="auto"
+        data-full-width-responsive="true"
+      ></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+
+      <h2>1. 90%는 '열' 때문에 죽습니다</h2>
+      <p>
+        LED는 빛을 낼 때 엄청난 열을 발생시킵니다. 이 열이 밖으로 빨리
+        빠져나가지 못하고 칩 주변에 맴돌면, 칩 내부 소자가 타버리거나 밝기가
+        급격히 떨어지는 '광속 유지율 저하'가 일어납니다.
+      </p>
+      <div class="fact-check">
+        <strong>해결책:</strong><br />
+        T5는 그나마 낫지만, 부착형 LED 바(블럭바, 줄조명)는
+        <strong
+          >반드시 알루미늄 방열판이나 금속 프레임 위에 붙여야 합니다.</strong
+        >
+        나무나 벽지에 바로 붙이면 열이 갇혀서 수명이 1/10로 줄어듭니다.
+      </div>
+
+      <h2>2. SMPS 부하율을 지킵시다</h2>
+      <p>
+        자동차 엔진을 계속 레드존(최고 RPM)으로 밟고 다니면 엔진이 금방
+        터지겠죠? SMPS도 마찬가지입니다. 100W 용량의 SMPS에 100W 조명을 꽉 채워
+        연결하면, 파워서플라이 내의 콘덴서가 부풀어 터지게 됩니다.
+      </p>
+      <ul>
+        <li>
+          <strong>70% 룰:</strong> SMPS 용량의 70%까지만 조명을 연결하세요. (ex.
+          200W SMPS에는 140W까지만 연결)
+        </li>
+        <li>
+          <strong>통풍:</strong> SMPS도 열이 많이 납니다. 이불 솜처럼 꽉 막힌
+          단열재 속에 파묻어두지 마세요.
+        </li>
+      </ul>
+
+      <h2>3. 중국산 저가형 칩의 문제</h2>
+      <p>
+        저가형 제품은 원가 절감을 위해 '오버 드라이빙(Over-driving)' 설계를
+        하기도 합니다. 칩이 견딜 수 있는 전류보다 더 많은 전류를 흘려보내서
+        밝기를 뻥튀기하는 것이죠. 처음엔 엄청 밝아 보이지만, 몇 달만 지나면
+        급격히 어두워집니다. 믿을 수 있는 국산 브랜드(삼성, LG 이노텍 칩 사용
+        제품)나 KC 인증 제품을 고르는 것이 장기적으로 돈을 아끼는 길입니다.
+      </p>
+    </div>
+    <footer><p>&copy; 2024 (주)폴라베어</p></footer>
+  </body>
+</html>
