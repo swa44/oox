@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>전기 시공 안전 가이드 - 폴라베어</title>
+    <meta
+      name="description"
+      content="셀프 조명 시공 시 반드시 알아야 할 전기 안전 수칙. 전선 규격(AWG), 접지 연결, 누전 차단기 확인 방법을 안내합니다."
+    />
+
+    <style>
+      :root {
+        --primary: #2563eb;
+        --secondary: #1e40af;
+        --text-dark: #111827;
+        --text-gray: #4b5563;
+        --bg-light: #f3f4f6;
+      }
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.8;
+        color: var(--text-dark);
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: var(--bg-light);
+      }
+      .content-box {
+        background: white;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      }
+      h1 {
+        font-size: 2.2rem;
+        margin-bottom: 1rem;
+        color: #111;
+        letter-spacing: -1px;
+      }
+      h2 {
+        font-size: 1.6rem;
+        margin-top: 3rem;
+        margin-bottom: 1.5rem;
+        color: #dc2626;
+        border-bottom: 2px solid #eee;
+        padding-bottom: 10px;
+      }
+      h3 {
+        font-size: 1.3rem;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        color: #333;
+      }
+      p {
+        margin-bottom: 1.2rem;
+        font-size: 1.05rem;
+        word-break: keep-all;
+      }
+      .nav-btn {
+        display: inline-block;
+        padding: 10px 20px;
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 20px;
+        color: #555;
+        text-decoration: none;
+        font-weight: 600;
+        margin-bottom: 20px;
+        transition: all 0.2s;
+      }
+      .nav-btn:hover {
+        background: #f9f9f9;
+        color: var(--primary);
+        border-color: var(--primary);
+      }
+      .table-responsive {
+        overflow-x: auto;
+        margin: 20px 0;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 500px;
+      }
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 12px;
+        text-align: left;
+      }
+      th {
+        background: #f3f4f6;
+        font-weight: bold;
+      }
+      .warning-box {
+        background: #fff1f2;
+        padding: 20px;
+        border-radius: 8px;
+        border: 1px solid #fecdd3;
+        color: #9f1239;
+        margin: 20px 0;
+      }
+      footer {
+        margin-top: 50px;
+        text-align: center;
+        color: #888;
+        font-size: 0.9rem;
+        border-top: 1px solid #ddd;
+        padding-top: 20px;
+      }
+    </style>
+
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9910941411948866"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <a href="/" class="nav-btn">← 메인으로 돌아가기</a>
+
+    <div class="content-box">
+      <h1>전기 시공 안전 가이드</h1>
+      <p>
+        조명은 아름답지만, 전기는 위험합니다. 셀프 인테리어를 하더라도 안전
+        기준만큼은 반드시 지켜야 합니다. 올바른 전선 규격 선정과 안전 수칙을
+        확인하세요.
+      </p>
+
+      <!-- AdSense -->
+      <ins
+        class="adsbygoogle"
+        style="display: block"
+        text-align="center"
+        data-ad-client="ca-pub-9910941411948866"
+        data-ad-slot="1234567890"
+        data-ad-format="auto"
+        data-full-width-responsive="true"
+      ></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+
+      <h2>1. 전선 굵기 선정 (SQ/AWG)</h2>
+      <p>
+        전선이 너무 얇으면 허용 전류를 넘어서서 열이 발생하고, 피복이 녹아
+        화재로 이어질 수 있습니다.
+      </p>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>규격 (SQ)</th>
+              <th>허용 전류 (대략)</th>
+              <th>용도</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>0.75 sq</td>
+              <td>~10A</td>
+              <td>소형 조명, 짧은 구간의 DC 배선</td>
+            </tr>
+            <tr>
+              <td>1.5 sq</td>
+              <td>~16A</td>
+              <td>일반적인 가정용 전등 라인, 콘센트</td>
+            </tr>
+            <tr>
+              <td>2.5 sq</td>
+              <td>~20A</td>
+              <td>고용량 전열 라인 (에어컨 등)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="warning-box">
+        <strong>주의:</strong> 위 표는 참고용이며, 배관 상태나 전선 종류(HIV,
+        VCTF 등)에 따라 허용 전류는 달라집니다. 조명용으로는 보통
+        <strong>HIV 1.5sq (IV선)</strong>를 가장 많이 사용합니다.
+      </p>
+
+      <h2>2. 접지(Earth)의 중요성</h2>
+      <p>SMPS(전원 공급 장치)를 사용할 때는 반드시 접지를 연결해야 합니다.</p>
+      <ul>
+        <li>
+          <strong>누설 전류 방지:</strong> 접지를 하지 않으면 SMPS 케이스에
+          미세한 전기가 흐를 수 있습니다.
+        </li>
+        <li>
+          <strong>잔광 제거:</strong> 스위치를 껐는데도 LED가 희미하게 켜져
+          있거나 깜빡거리는 현상(잔광)은 대부분 접지 불량이나 스위치 배선
+          문제(상이 바뀐 경우)에서 발생합니다.
+        </li>
+      </ul>
+
+      <h2>3. 시공 전 필수 체크리스트</h2>
+      <ul>
+        <li>
+          작업 전 반드시
+          <strong>세대 분전반(두꺼비집)의 차단기를 내리고</strong> 작업하세요.
+        </li>
+        <li>
+          전선 연결 부위는 와이어 커넥터나 절연 테이프로 꼼꼼하게 마감하여
+          구리선이 노출되지 않도록 합니다.
+        </li>
+        <li>물기가 있는 곳에서는 절대 전기 작업을 하지 마세요.</li>
+      </ul>
+    </div>
+
+    <footer>
+      <p>&copy; 2024 폴라베어. 안전한 전기 사용을 권장합니다.</p>
+    </footer>
+  </body>
+</html>
