@@ -441,3 +441,37 @@ input[type="radio"] {
     border-radius: 4px; /* 모바일에서는 약간 작은 라운딩 */
   }
 }
+
+/* SEO Content Section */
+.info-section {
+  max-width: 800px;
+  margin: 40px auto 0;
+  padding: 0 10px;
+}
+.content-box {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  border: 1px solid var(--card-border);
+}
+.content-box h2 {
+  font-size: 1.5rem;
+  margin-bottom: 16px;
+  color: #111827;
+}
+.content-box h3 {
+  font-size: 1.2rem;
+  margin: 24px 0 12px;
+  color: #374151;
+}
+.content-box p, .content-box li {
+  color: #4b5563;
+  line-height: 1.7;
+}
+.content-box ul {
+  padding-left: 20px;
+}
+.content-box li {
+  margin-bottom: 8px;
+}
