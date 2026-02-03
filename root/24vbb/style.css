@@ -59,7 +59,7 @@ select {
   grid-column: 1 / -1;
 }
 
-input[type='number'],
+input[type="number"],
 select {
   width: 100%;
   padding: 8px 10px;
@@ -76,7 +76,9 @@ button {
   background: #f1f3ff;
   font-weight: 700;
   cursor: pointer;
-  transition: box-shadow 0.12s ease-in-out, transform 0.02s ease-in-out;
+  transition:
+    box-shadow 0.12s ease-in-out,
+    transform 0.02s ease-in-out;
 }
 button:hover {
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
@@ -180,7 +182,7 @@ label.checkbox-row {
   width: 100%;
   max-width: 520px; /* 필요 시 조정. 중앙 그룹에서 예쁘게 보이도록 */
 }
-label.checkbox-row input[type='checkbox'] {
+label.checkbox-row input[type="checkbox"] {
   margin: 0;
 }
 label.checkbox-row strong {
@@ -203,7 +205,9 @@ label.checkbox-row strong {
   border: 1px solid #e5e8eb;
   border-radius: 12px;
   background: #fff;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
   text-align: left;
 }
 
@@ -217,7 +221,7 @@ label.checkbox-row strong {
   padding-top: 2px; /* 위쪽 여백 추가 */
   margin-bottom: 4px; /* 이미지와의 간격 줄임 */
 }
-.checkbox-row.with-thumb .row-top input[type='checkbox'] {
+.checkbox-row.with-thumb .row-top input[type="checkbox"] {
   margin: 0;
 }
 .checkbox-row.with-thumb .row-top strong {
@@ -250,8 +254,9 @@ label.checkbox-row strong {
 }
 
 /* 체크 시 이미지 하이라이트(불 들어오는 느낌) */
-.checkbox-row.with-thumb input[type='checkbox']:checked ~ .acc-thumb img {
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.35),
+.checkbox-row.with-thumb input[type="checkbox"]:checked ~ .acc-thumb img {
+  box-shadow:
+    0 0 0 2px rgba(59, 130, 246, 0.35),
     0 4px 10px rgba(59, 130, 246, 0.15);
   outline: 1px solid rgba(59, 130, 246, 0.55);
 }
@@ -363,7 +368,9 @@ label.checkbox-row strong {
   cursor: pointer;
   font-size: 16px;
   font-weight: bold;
-  transition: background-color 0.3s, color 0.3s;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
 }
 #pickSerial:hover,
 #pickParallel:hover {
@@ -382,8 +389,35 @@ label.checkbox-row strong {
   font-weight: 700;
 }
 
-.label-text .desc {
-  font-weight: normal;
-  color: #555;
-  font-size: 0.9rem;
+/* SEO Info Section */
+.info-section {
+  background: white;
+  padding: 40px 20px;
+  border-top: 1px solid #e5e7eb;
+  margin-top: 40px;
+  border-radius: 12px;
+}
+.content-box h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: #1f2937;
+}
+.content-box h3 {
+  font-size: 1.25rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: #374151;
+}
+.content-box p {
+  line-height: 1.6;
+  color: #4b5563;
+  margin-bottom: 1rem;
+}
+.content-box ul {
+  padding-left: 20px;
+  color: #4b5563;
+  margin-bottom: 1.5rem;
+}
+.content-box li {
+  margin-bottom: 0.5rem;
 }
