@@ -1,20 +1,29 @@
 // ===== 기본 데이터 =====
 const t5Sizes = [
+  { label: "1500", length: 1505 },
   { label: "1200", length: 1180 },
   { label: "900", length: 880 },
   { label: "600", length: 580 },
   { label: "400", length: 375 },
   { label: "300", length: 285 },
 ];
-const order = ["1200", "900", "600", "400", "300"];
+const order = ["1500", "1200", "900", "600", "400", "300"];
 const priceMap = {
+  1500: 7200,
   1200: 4800,
   900: 4600,
   600: 4200,
   400: 4600,
   300: 2800,
 };
-const realMap = { 1200: 1180, 900: 880, 600: 580, 400: 375, 300: 285 };
+const realMap = {
+  1500: 1505,
+  1200: 1180,
+  900: 880,
+  600: 580,
+  400: 375,
+  300: 285,
+};
 
 // 타입별 이미지 경로
 const typeImageSrc = {
@@ -165,7 +174,7 @@ function formatCounts(countMap) {
   return lines || "없음";
 }
 function comboToCounts(item) {
-  const cm = { 1200: 0, 900: 0, 600: 0, 400: 0, 300: 0 };
+  const cm = { 1500: 0, 1200: 0, 900: 0, 600: 0, 400: 0, 300: 0 };
   item.combo.forEach((c) => {
     cm[c.label] = (cm[c.label] || 0) + 1;
   });
@@ -468,7 +477,7 @@ function hideFloatingTotals() {
 }
 
 function renderTotals() {
-  const totalCounts = { 1200: 0, 900: 0, 600: 0, 400: 0, 300: 0 };
+  const totalCounts = { 1500: 0, 1200: 0, 900: 0, 600: 0, 400: 0, 300: 0 };
   let any = false;
   for (const sideId in sideLists) {
     const list = sideLists[sideId];
