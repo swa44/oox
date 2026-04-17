@@ -579,7 +579,7 @@
       lCornerCoverPrice = L_CORNER_COVER_PRICE[spec] || 0;
       lCornerCount = 1;
 
-      const cornerAdd = 65; // ㄱ자연결은 65mm로 통일 (기존: L_CORNER_SIZE[spec])
+      const cornerAdd = L_CORNER_SIZE[spec] || 0; // 규격별 기역자 길이 적용 (40:45mm, 60:65mm)
       const totalCoverLen = A + B + 2 * cornerAdd;
       const straightCoverNeed = Math.max(0, totalCoverLen - 2000);
       const neededMeters = Math.ceil(straightCoverNeed / 1000);
@@ -883,14 +883,14 @@
       }
       if (typeof A_len === "number" && typeof B_len === "number") {
         // ㄱ자연결
-        const add = 70; // 기역자 65mm + 사이드캡 5mm = 70mm
+        const add = String(spec) === "40" ? 50 : 70;
+        const corner = String(spec) === "40" ? 45 : 65;
         const aTot = A_len + add;
         const bTot = B_len + add;
-        const corner = 65;
         return `
       <div style="color:red; font-size:0.9em; margin-bottom:16px; padding: 12px; background: #fff3cd; border-radius: 8px; border: 1px solid #ffc107;">
         <strong>📏 시공 안내</strong><br>
-        수월한 시공을 위해 사이드캡 여유공간(각 변 5mm)과 기역자형 길이 65mm를 고려하여 다음과 같이 설치 공간을 마련해 주세요.<br>
+        수월한 시공을 위해 사이드캡 여유공간(각 변 5mm)과 기역자형 길이 ${corner}mm를 고려하여 다음과 같이 설치 공간을 마련해 주세요.<br>
         A변: ${fmt(A_len)}mm + ${fmt(add)}mm → <strong>${fmt(
           aTot,
         )}mm</strong><br>
