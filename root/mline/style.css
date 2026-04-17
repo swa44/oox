@@ -63,8 +63,13 @@ input[type="number"],
 select {
   width: 100%;
   padding: 8px 10px;
-  border: 1px solid var(--card-border);
+  border: 2px solid #555; /* 기존 1px solid #e5e7eb에서 변경 */
   border-radius: 8px;
+  outline: none;
+}
+input[type="number"]:focus,
+select:focus {
+  border-color: #2563eb; /* 강조 효과 */
 }
 
 /* 결과 영역 래퍼 */
